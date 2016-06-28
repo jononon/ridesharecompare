@@ -10,6 +10,7 @@ $(document).ready(function () {
     success: function(output) {
       for (var price in prices) {
         $('#'+price.display_name).append('<th>'+price.localized_display_name+'</th><th>'+(price.low_estimate+price.high_estimate)/2*price.surge_multiplier+'</th>');
+        console.log(price)
       }
     },
     method: "GET",
