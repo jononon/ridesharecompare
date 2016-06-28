@@ -10,14 +10,12 @@ $(document).ready(function () {
     success: function(output) {
       for (var price in prices) {
         $('#'+price.display_name).append('<th>'+price.localized_display_name+'</th><th>'+(price.low_estimate+price.high_estimate)/2*price.surge_multiplier+'</th>');
-        console.log(price)
+        console.log(price);
       }
     },
     method: "GET",
     headers: {
       "authorization": "Token v_KOeq4LzWvcEhWFHQIUvHCUWWJN5OiSS46ckv5p",
-      "cache-control": "no-cache",
-      "postman-token": "2a7156f2-93a9-c089-597d-d6aeeb622b2b"
     },
     async: false,
     timeout: 5000,
