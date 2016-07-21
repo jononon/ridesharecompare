@@ -42,7 +42,7 @@ $(document).ready(function () {
       for (var i = 0; i < output.times.length; i++) {
         for (var j = 0; j < rides.length; j++) {
           if(rides[j].product_id == output.times[i].product_id)
-            rides[j].eta = ''+output.times[i].estimate%60+':'+parseInt(output.times[i].estimate/60);
+            rides[j].eta = ''+parseInt(output.times[i].estimate/60)+':'+output.times[i].estimate%60;
         }
       }
     },
@@ -87,7 +87,7 @@ $(document).ready(function () {
         for (var i = 0; i < output.eta_estimates.length; i++) {
           for (var j = 0; j < rides.length; j++) {
             if(rides[j].product_id == output.eta_estimates[i].ride_type)
-              rides[j].eta = ''+output.eta_estimates[i].eta_seconds%60+':'+parseInt(output.eta_estimates[i].eta_seconds/60);
+              rides[j].eta = ''+parseInt(output.eta_estimates[i].eta_seconds/60)+':'+output.eta_estimates[i].eta_seconds%60;
           }
         }
       },
