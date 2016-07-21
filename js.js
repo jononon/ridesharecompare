@@ -26,7 +26,7 @@ $(document).ready(function () {
     dataType: 'json',
     success: function(output) {
       for (var i = 0; i < output.cost_estimates.length; i++) {
-        estimatedCost = (output.cost_estimates[i].estimated_cost_cents_min+output.prices[i].estimated_cost_cents_max)/2;
+        estimatedCost = (output.cost_estimates[i].estimated_cost_cents_min+output.cost_estimates[i].estimated_cost_cents_max)/2;
         tablehtml+='<tr><td>'+output.cost_estimates[i].display_name+'</td><td>'+estimatedCost%100+'.'+parseInt(estimatedCost/100)+'</td></tr>';
       }
     },
