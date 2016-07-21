@@ -29,7 +29,13 @@ $(document).ready(function () {
         estimatedCost = (output.cost_estimates[i].estimated_cost_cents_min+output.prices[i].estimated_cost_cents_max)/2;
         $('#'+output.cost_estimates[i].ride_type).append('<th>'+output.cost_estimates[i].display_name+'</th><th>'+estimatedCost%100+'.'+parseInt(estimatedCost/100)+'</th>');
       }
-    }
+    },
+    method: "GET",
+    headers: {
+      "Authorization": "Bearer"+lyftbearer,
+    },
+    async: false,
+    timeout: 5000,
   })
 });
 /*curl -X POST -H "Content-Type: application/json" \
