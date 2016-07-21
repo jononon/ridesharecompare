@@ -8,9 +8,9 @@ $(document).ready(function () {
     url: 'https://api.uber.com/v1/estimates/price?start_latitude=34.146056&start_longitude=-118.746635&end_latitude=34.048117&end_longitude=-118.5060167&seat_count=1',
     dataType: 'json',
     success: function(output) {
-      for (var price in output.prices) {
-        $('#'+price.display_name).append('<th>'+price.localized_display_name+'</th><th>'+(price.low_estimate+price.high_estimate)/2*price.surge_multiplier+'</th>');
-        console.log(price);
+      for (var i = 0; i < output.prices.length; i++) {
+        $('#'+output.prices[i].display_name).append('<th>'+output.prices[i].localized_display_name+'</th><th>'+(output.prices[i].low_estimate+price.high_estimate)/2*output.prices[i].surge_multiplier+'</th>');
+        console.log(output.prices[i].display_name);
       }
     },
     method: "GET",
