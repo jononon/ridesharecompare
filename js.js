@@ -42,7 +42,10 @@ $(document).ready(function () {
       for (var i = 0; i < output.times.length; i++) {
         for (var j = 0; j < rides.length; j++) {
           if(rides[j].product_id == output.times[i].product_id)
-            rides[j].eta = ''+parseInt(output.times[i].estimate/60)+':'+output.times[i].estimate%60;
+            if(output.times[i].estimate == undefined)
+              rides[j].eta = 'Not Available';
+            else
+              rides[j].eta = ''+parseInt(output.times[i].estimate/60)+' mins';
         }
       }
     },
@@ -87,7 +90,10 @@ $(document).ready(function () {
         for (var i = 0; i < output.eta_estimates.length; i++) {
           for (var j = 0; j < rides.length; j++) {
             if(rides[j].product_id == output.eta_estimates[i].ride_type)
-              rides[j].eta = ''+parseInt(output.eta_estimates[i].eta_seconds/60)+':'+output.eta_estimates[i].eta_seconds%60;
+              if(output.eta_estimates[i].eta_seconds == undefined)
+                rides[j].eta = 'Not Available';
+              else
+                rides[j].eta = ''+parseInt(output.eta_estimates[i].eta_seconds/60)+' mins';
           }
         }
       },
