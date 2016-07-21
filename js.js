@@ -42,12 +42,11 @@ $(document).ready(function () {
       for (var j = 0; j < rides.length; j++) {
         for (var i = 0; i < output.times.length; i++) {
           if(rides[j].product_id == output.times[i].product_id) {
-            if(rides[j].eta == undefined) {
-              rides[j].eta = ''+parseInt(output.times[i].estimate/60)+' mins';
-              break;
-            }
+            rides[j].eta = ''+parseInt(output.times[i].estimate/60)+' mins';
+            break;
           }
-          rides[j].eta = 'Not Available';
+          if(rides[j].eta == undefined)
+            rides[j].eta = 'Not Available';
         }
       }
     },
@@ -92,11 +91,10 @@ $(document).ready(function () {
         for (var j = 0; j < rides.length; j++) {
           for (var i = 0; i < output.eta_estimates.length; i++) {
             if(rides[j].product_id == output.eta_estimates[i].ride_type) {
-              if(rides[j].eta == undefined) {
-                rides[j].eta = ''+parseInt(output.eta_estimates[i].eta_seconds/60)+' mins';
-                break;
-              }
+              rides[j].eta = ''+parseInt(output.eta_estimates[i].eta_seconds/60)+' mins';
+              break;
             }
+            if(rides[j].eta == undefined)
             rides[j].eta = 'Not Available';
           }
         }
