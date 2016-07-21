@@ -20,8 +20,8 @@ $(document).ready(function () {
             highEstimate: output.prices[i].high_estimate,
             lowEstimate: output.prices[i].low_estimate,
             surge: output.prices[i].surge_multiplier,
-            companyLogo: "uberAssets/RIDES API ICON/SVG/uber_rides_api_icon.svg",
-            surgeText: "<img src=uberAssets/UBER SURGE ICON/Source Files/Uber_Surge_Icon.svg>",
+            companyLogo: "<img src=uberAssets/RIDESAPIICON/png/uber_rides_api_icon_1x_36px.png>",
+            surgeText: "<img src=uberAssets/UBERSURGEICON/PNGs/1x/Uber_Surge_Icon_36px.png>",
             estimate: output.prices[i].estimate,
             service: "Uber",
             product_id: output.prices[i].product_id,
@@ -71,7 +71,7 @@ $(document).ready(function () {
             highEstimate: output.cost_estimates[i].estimated_cost_cents_max/100,
             lowEstimate: output.cost_estimates[i].estimated_cost_cents_min/100,
             surge: output.cost_estimates[i].primetime_percentage.substring=='0%'?1:output.cost_estimates[i].primetime_percentage.substring,
-            companyLogo: "lyftAssets/SVG/lyft_pixel.svg",
+            companyLogo: "<img src=lyftAssets/SVG/lyft_pixel.svg>",
             surgeText: "Primetime",
             estimate: output.cost_estimates[i].estimated_cost_cents_min==output.cost_estimates[i].estimated_cost_cents_max?'$'+parseInt(output.cost_estimates[i].estimated_cost_cents_max/100)+'.'+(output.cost_estimates[i].estimated_cost_cents_max%100<10?'0'+output.cost_estimates[i].estimated_cost_cents_max%100:output.cost_estimates[i].estimated_cost_cents_max%100):'$'+parseInt(output.cost_estimates[i].estimated_cost_cents_min/100)+'-'+parseInt(output.cost_estimates[i].estimated_cost_cents_max/100),
             service: "Lyft",
@@ -125,7 +125,7 @@ $(document).ready(function () {
   rides.sort(comparePrice);
   tablehtml = "<tr><th>Ride</th><th>Cost</th><th>ETA</th><th>Go!</th></tr>";
   for (var i = 0; i < rides.length; i++) {
-    tablehtml+='<tr><td><img src='+rides[i].companyLogo+'>'+rides[i].name+(rides[i].surge!=1?' '+rides[i].surgeText+' '+rides[i].surge:'')+'</td><td>'+rides[i].estimate+'</td><td>'+rides[i].eta+'</td><td><a href='+rides[i].orderLink+'><button type="button" class="btn btn-default">Request</button></a></td></tr>'
+    tablehtml+='<tr><td>'+rides[i].companyLogo+' '+rides[i].name+(rides[i].surge!=1?' '+rides[i].surgeText+' '+rides[i].surge:'')+'</td><td>'+rides[i].estimate+'</td><td>'+rides[i].eta+'</td><td><a href='+rides[i].orderLink+'><button type="button" class="btn btn-default">Request</button></a></td></tr>'
   }
   $('#prices').append(tablehtml);
 });
