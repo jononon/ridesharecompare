@@ -71,7 +71,7 @@ $(document).ready(function () {
             highEstimate: output.cost_estimates[i].estimated_cost_cents_max/100,
             lowEstimate: output.cost_estimates[i].estimated_cost_cents_min/100,
             surge: output.cost_estimates[i].primetime_percentage.substring=='0%'?1:output.cost_estimates[i].primetime_percentage.substring,
-            companyLogo: "<img src=lyftAssets/SVG/lyft_pixel.svg>",
+            companyLogo: "<img src=lyftAssets/pngs/1x/lyft_36px.png>",
             surgeText: "Primetime",
             estimate: output.cost_estimates[i].estimated_cost_cents_min==output.cost_estimates[i].estimated_cost_cents_max?'$'+parseInt(output.cost_estimates[i].estimated_cost_cents_max/100)+'.'+(output.cost_estimates[i].estimated_cost_cents_max%100<10?'0'+output.cost_estimates[i].estimated_cost_cents_max%100:output.cost_estimates[i].estimated_cost_cents_max%100):'$'+parseInt(output.cost_estimates[i].estimated_cost_cents_min/100)+'-'+parseInt(output.cost_estimates[i].estimated_cost_cents_max/100),
             service: "Lyft",
