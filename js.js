@@ -10,7 +10,7 @@ $(document).ready(function () {
     dataType: 'json',
     success: function(output) {
       for (var i = 0; i < output.prices.length; i++) {
-        tablehtml+='<tr><td>'+output.prices[i].localized_display_name+'</td><td>'+(output.prices[i].low_estimate+output.prices[i].high_estimate)/2+'</td></tr>';
+        tablehtml+='<tr><td>'+output.prices[i].localized_display_name+'</td><td>'+output.prices[i].estimate+'</td></tr>';
         console.log(output.prices[i].display_name);
       }
     },
@@ -27,7 +27,7 @@ $(document).ready(function () {
     success: function(output) {
       for (var i = 0; i < output.cost_estimates.length; i++) {
         estimatedCost = (output.cost_estimates[i].estimated_cost_cents_min+output.cost_estimates[i].estimated_cost_cents_max)/2;
-        tablehtml+='<tr><td>'+output.cost_estimates[i].display_name+'</td><td>'+estimatedCost%100+'.'+parseInt(estimatedCost/100)+'</td></tr>';
+        tablehtml+='<tr><td>'+output.cost_estimates[i].display_name+'</td><td>$'+estimatedCost%100+'.'+parseInt(estimatedCost/100)+'</td></tr>';
       }
     },
     method: "GET",
