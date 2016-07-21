@@ -92,9 +92,10 @@ $(document).ready(function () {
         for (var j = 0; j < rides.length; j++) {
           for (var i = 0; i < output.eta_estimates.length; i++) {
             if(rides[j].product_id == output.eta_estimates[i].ride_type) {
-              if(rides[j].eta == undefined)
+              if(rides[j].eta == undefined) {
                 rides[j].eta = ''+parseInt(output.eta_estimates[i].eta_seconds/60)+' mins';
-              break;
+                break;
+              }
             }
             rides[j].eta = 'Not Available';
           }
