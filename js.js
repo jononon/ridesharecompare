@@ -20,7 +20,7 @@ $(document).ready(function () {
             highEstimate: output.prices[i].high_estimate,
             lowEstimate: output.prices[i].low_estimate,
             surge: output.prices[i].surge_multiplier,
-            companyLogo: "<img src=uberAssets/RIDESAPIICON/png/uber_rides_api_icon_1x_36px.png>",
+            companyLogo: "<img src=uberAssets/RIDESAPIICON/PNG/uber_rides_api_icon_1x_36px.png>",
             surgeText: "<img src=uberAssets/UBERSURGEICON/PNGs/1x/Uber_Surge_Icon_36px.png>",
             estimate: output.prices[i].estimate,
             service: "Uber",
