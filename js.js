@@ -4,12 +4,13 @@ $(document).ready(function () {
     console.log(location.coords.longitude);
     console.log(location.coords.accuracy);
   });
+  tablehtml = "<tr><th>Ride</th><th>Cost</th></tr>";
   $.ajax({
     url: 'https://api.uber.com/v1/estimates/price?start_latitude=34.146056&start_longitude=-118.746635&end_latitude=34.048117&end_longitude=-118.5060167&seat_count=1',
     dataType: 'json',
     success: function(output) {
       for (var i = 0; i < output.prices.length; i++) {
-        $('#'+output.prices[i].display_name).append('<th>'+output.prices[i].localized_display_name+'</th><th>'+(output.prices[i].low_estimate+output.prices[i].high_estimate)/2+'</th>');
+        tablehtml+='<tr><td>'+output.prices[i].localized_display_name+'</td><td>'+(output.prices[i].low_estimate+output.prices[i].high_estimate)/2+'</td></tr>');
         console.log(output.prices[i].display_name);
       }
     },
@@ -26,7 +27,7 @@ $(document).ready(function () {
     success: function(output) {
       for (var i = 0; i < output.cost_estimates.length; i++) {
         estimatedCost = (output.cost_estimates[i].estimated_cost_cents_min+output.prices[i].estimated_cost_cents_max)/2;
-        $('#'+output.cost_estimates[i].ride_type).append('<th>'+output.cost_estimates[i].display_name+'</th><th>'+estimatedCost%100+'.'+parseInt(estimatedCost/100)+'</th>');
+        tablehtml+='<tr><td>'+output.cost_estimates[i].display_name+'</td><td>'+estimatedCost%100+'.'+parseInt(estimatedCost/100)+'</td></tr>');
       }
     },
     method: "GET",
@@ -36,6 +37,7 @@ $(document).ready(function () {
     async: false,
     timeout: 5000,
   })
+   $('#prices').append(tablehtml);
 });
 /*curl -X POST -H "Content-Type: application/json" \
      --user "v3OmgqE86Nhu:197pfsoEIr-I_wYYBMA7-sUaMB9zknAx" \
