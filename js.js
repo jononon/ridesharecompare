@@ -9,7 +9,7 @@ $(document).ready(function () {
     dataType: 'json',
     success: function(output) {
       for (var i = 0; i < output.prices.length; i++) {
-        $('#'+output.prices[i].display_name).append('<th>'+output.prices[i].localized_display_name+'</th><th>'+(output.prices[i].low_estimate+price.high_estimate)/2*output.prices[i].surge_multiplier+'</th>');
+        $('#'+output.prices[i].display_name).append('<th>'+output.prices[i].localized_display_name+'</th><th>'+(output.prices[i].low_estimate+output.prices[i].high_estimate)/2*output.prices[i].surge_multiplier+'</th>');
         console.log(output.prices[i].display_name);
       }
     },
