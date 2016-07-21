@@ -15,7 +15,6 @@ $(document).ready(function () {
     success: function(output) {
       for (var i = 0; i < output.prices.length; i++) {
         tablehtml+='<tr><td>'+output.prices[i].localized_display_name+'</td><td>'+output.prices[i].estimate+'</td><td><a href=https://m.uber.com/ul?action=setPickup&pickup[latitude]='+startLat+'&pickup[longitude]='+startLng+'&pickup[nickname]=inVia&pickup[formatted_address]=3304%20Derry%20Ave%2C%20Agoura%20Hills%2C%20CA%2091301&dropoff[latitude]='+endLat+'&dropoff[longitude]='+endLng+'&dropoff[formatted_address]=1124%20Napoli%20Drive%2C%20Pacific%20Palisades%2C%20CA%2090272&product_id='+output.prices[i].product_id+'><button type="button" class="btn btn-default">Request</button></a></td></tr>';
-        console.log(output.prices[i].display_name);
       }
     },
     method: "GET",
