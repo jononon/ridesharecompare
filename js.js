@@ -32,7 +32,7 @@ $(document).ready(function () {
     },
     method: "GET",
     headers: {
-      "Authorization": "Bearer"+lyftbearer,
+      "Authorization": "Bearer "+lyftbearer,
     },
     async: false,
     timeout: 5000,
