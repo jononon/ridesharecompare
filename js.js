@@ -42,9 +42,10 @@ $(document).ready(function () {
       for (var j = 0; j < rides.length; j++) {
         for (var i = 0; i < output.times.length; i++) {
           if(rides[j].product_id == output.times[i].product_id) {
-            if(rides[j].eta == undefined)
+            if(rides[j].eta == undefined) {
               rides[j].eta = ''+parseInt(output.times[i].estimate/60)+' mins';
-            break;
+              break;
+            }
           }
           rides[j].eta = 'Not Available';
         }
