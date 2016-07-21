@@ -4,13 +4,17 @@ $(document).ready(function () {
     console.log(location.coords.longitude);
     console.log(location.coords.accuracy);
   });
-  tablehtml = "<tr><th>Ride</th><th>Cost</th></tr>";
+  startLat = 34.145954;
+  startLng = -118.748221;
+  endLat = 34.0481852;
+  endLng = -118.5038797;
+  tablehtml = "<tr><th>Ride</th><th>Cost</th><th>Go!</th></tr>";
   $.ajax({
-    url: 'https://api.uber.com/v1/estimates/price?start_latitude=34.146056&start_longitude=-118.746635&end_latitude=34.048117&end_longitude=-118.5060167&seat_count=1',
+    url: 'https://api.uber.com/v1/estimates/price?start_latitude='+startLat+'&start_longitude='+startLng+'&end_latitude='+endLat+'&end_longitude='+endLng+'&seat_count=1',
     dataType: 'json',
     success: function(output) {
       for (var i = 0; i < output.prices.length; i++) {
-        tablehtml+='<tr><td>'+output.prices[i].localized_display_name+'</td><td>'+output.prices[i].estimate+'</td></tr>';
+        tablehtml+='<tr><td>'+output.prices[i].localized_display_name+'</td><td>'+output.prices[i].estimate+'</td><td><a href=https://m.uber.com/ul?action=setPickup&pickup[latitude]='+startLat+'&pickup[longitude]='+startLng+'&pickup[nickname]=inVia&pickup[formatted_address]=3304%20Derry%20Ave%2C%20Agoura%20Hills%2C%20CA%2091301&dropoff[latitude]='+endLat+'&dropoff[longitude]='+endLng+'&dropoff[formatted_address]=1124%20Napoli%20Drive%2C%20Pacific%20Palisades%2C%20CA%2090272&product_id='+output.prices[i].product_id+'><button type="button" class="btn btn-default">Default</button></a></td></tr>';
         console.log(output.prices[i].display_name);
       }
     },
@@ -22,12 +26,12 @@ $(document).ready(function () {
     timeout: 5000,
   });
   $.ajax({
-    url: 'https://api.lyft.com/v1/cost?start_lat=34.146056&start_lng=-118.746635&end_lat=34.048117&end_lng=-118.5060167',
+    url: 'https://api.lyft.com/v1/cost?start_lat='+startLat+'&start_lng='+startLng+'&end_lat='+endLat+'&end_lng='+endLng,
     dataType: 'json',
     success: function(output) {
       for (var i = 0; i < output.cost_estimates.length; i++) {
         estimatedCost = (output.cost_estimates[i].estimated_cost_cents_min+output.cost_estimates[i].estimated_cost_cents_max)/2;
-        tablehtml+='<tr><td>'+output.cost_estimates[i].display_name+'</td><td>$'+estimatedCost%100+'.'+parseInt(estimatedCost/100)+'</td></tr>';
+        tablehtml+='<tr><td>'+output.cost_estimates[i].display_name+'</td><td>$'+estimatedCost%100+'.'+parseInt(estimatedCost/100)'+</td></tr>';
       }
     },
     method: "GET",
