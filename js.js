@@ -10,7 +10,7 @@ $(document).ready(function () {
     dataType: 'json',
     success: function(output) {
       for (var i = 0; i < output.prices.length; i++) {
-        tablehtml+='<tr><td>'+output.prices[i].localized_display_name+'</td><td>'+(output.prices[i].low_estimate+output.prices[i].high_estimate)/2+'</td></tr>');
+        tablehtml+='<tr><td>'+output.prices[i].localized_display_name+'</td><td>'+(output.prices[i].low_estimate+output.prices[i].high_estimate)/2+'</td></tr>';
         console.log(output.prices[i].display_name);
       }
     },
