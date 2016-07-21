@@ -20,7 +20,6 @@ $(document).ready(function () {
     async: false,
     timeout: 5000,
   });
-  lyftbearer = "gAAAAABXkQMyvsFHAKvOJcT9uTFDy_jHYnIHzuS3gU-Ad3_GbD7E18UDtLGB_tzKTMw2Z9Az1Q5-gjR8k8la973MXE3cfAN7M5xF-kk-kk0pygUPvmS4mo7i8LAcfBr3_oVRH6nWYv8wTMOVfdhMh8KBfFEvqtdEyPtOZNUxlPAC9ljvrxEY6bE_svIcVGHSWx-n0lPxJPwDS6DHSFIo4fB9fM5R5kVGcg=="
   $.ajax({
     url: 'https://api.lyft.com/v1/cost?start_lat=34.146056&start_long=-118.746635&end_lat=34.048117&end_long=-118.5060167',
     dataType: 'json',
@@ -32,7 +31,7 @@ $(document).ready(function () {
     },
     method: "GET",
     headers: {
-      "Authorization": "Bearer "+lyftbearer,
+      "Authorization": "Bearer gAAAAABXkQMyvsFHAKvOJcT9uTFDy_jHYnIHzuS3gU-Ad3_GbD7E18UDtLGB_tzKTMw2Z9Az1Q5-gjR8k8la973MXE3cfAN7M5xF-kk-kk0pygUPvmS4mo7i8LAcfBr3_oVRH6nWYv8wTMOVfdhMh8KBfFEvqtdEyPtOZNUxlPAC9ljvrxEY6bE_svIcVGHSWx-n0lPxJPwDS6DHSFIo4fB9fM5R5kVGcg==",
     },
     async: false,
     timeout: 5000,
