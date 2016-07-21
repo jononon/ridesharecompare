@@ -31,7 +31,7 @@ $(document).ready(function () {
     success: function(output) {
       for (var i = 0; i < output.cost_estimates.length; i++) {
         estimatedCost = (output.cost_estimates[i].estimated_cost_cents_min+output.cost_estimates[i].estimated_cost_cents_max)/2;
-        tablehtml+='<tr><td>'+output.cost_estimates[i].display_name+'</td><td>$'+estimatedCost%100+'.'+parseInt(estimatedCost/100)+'</td><td><a href=lyft://ridetype?id='+ride_type+'&pickup[latitude]='+startLat+'&pickup[longitude]='+startLng+'&destination[latitude]='+startLat+'&destination[longitude]='+startLng+'><button type="button" class="btn btn-default">Request</button></a></td></tr>';
+        tablehtml+='<tr><td>'+output.cost_estimates[i].display_name+'</td><td>$'+estimatedCost%100+'.'+parseInt(estimatedCost/100)+'</td><td><a href=lyft://ridetype?id='+output.cost_estimates[i].ride_type+'&pickup[latitude]='+startLat+'&pickup[longitude]='+startLng+'&destination[latitude]='+startLat+'&destination[longitude]='+startLng+'><button type="button" class="btn btn-default">Request</button></a></td></tr>';
       }
     },
     method: "GET",
