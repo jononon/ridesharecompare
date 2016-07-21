@@ -39,12 +39,11 @@ $(document).ready(function () {
     url: 'https://api.uber.com/v1/estimates/time?start_latitude='+startLat+'&start_longitude='+startLng,
     dataType: 'json',
     success: function(output) {
-      outerLoop:
-      for (var i = 0; i < output.times.length; i++) {
-        for (var j = 0; j < rides.length; j++) {
+      for (var j = 0; j < rides.length; j++) {
+        for (var i = 0; i < output.times.length; i++) {
           if(rides[j].product_id == output.times[i].product_id) {
             rides[j].eta = ''+parseInt(output.times[i].estimate/60)+' mins';
-            break outerLoop;
+            break;
           }
           rides[j].eta = 'Not Available';
         }
@@ -88,12 +87,11 @@ $(document).ready(function () {
       url: 'https://api.lyft.com/v1/eta?lat='+startLat+'&lng='+startLng,
       dataType: 'json',
       success: function(output) {
-        outerLoop:
-        for (var i = 0; i < output.eta_estimates.length; i++) {
-          for (var j = 0; j < rides.length; j++) {
+        for (var j = 0; j < rides.length; j++) {
+          for (var i = 0; i < output.eta_estimates.length; i++) {
             if(rides[j].product_id == output.eta_estimates[i].ride_type) {
               rides[j].eta = ''+parseInt(output.eta_estimates[i].eta_seconds/60)+' mins';
-              break outerLoop;
+              break;
             }
             rides[j].eta = 'Not Available';
           }
