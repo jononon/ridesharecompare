@@ -62,13 +62,12 @@ $(document).ready(function () {
     dataType: 'json',
     success: function(output) {
       for (var i = 0; i < output.cost_estimates.length; i++) {
-        estimatedCost = '$'+(output.cost_estimates[i].estimated_cost_cents_min+output.cost_estimates[i].estimated_cost_cents_max)/2/100;
         rides.push(
           {
             name: output.cost_estimates[i].display_name,
             highEstimate: output.cost_estimates[i].estimated_cost_cents_max/100,
             lowEstimate: output.cost_estimates[i].estimated_cost_cents_min/100,
-            estimate: estimatedCost,
+            estimate: '$'+parseInt(output.cost_estimates[i].estimated_cost_cents_min/100)+'-'+parseInt(output.cost_estimates[i].estimated_cost_cents_max/100),
             service: "Lyft",
             product_id: output.cost_estimates[i].ride_type,
             orderLink: 'lyft://ridetype?id='+output.cost_estimates[i].ride_type+'&pickup[latitude]='+startLat+'&pickup[longitude]='+startLng+'&destination[latitude]='+endLat+'&destination[longitude]='+endLng,
