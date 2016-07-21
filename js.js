@@ -70,7 +70,7 @@ $(document).ready(function () {
             name: output.cost_estimates[i].display_name,
             highEstimate: output.cost_estimates[i].estimated_cost_cents_max/100,
             lowEstimate: output.cost_estimates[i].estimated_cost_cents_min/100,
-            surge: output.cost_estimates[i].primetime_percentage=='0%'?1:output.cost_estimates[i].primetime_percentage,
+            surge: "20%",//output.cost_estimates[i].primetime_percentage=='0%'?1:output.cost_estimates[i].primetime_percentage,
             companyLogo: "<img src=lyftAssets/pngs/1x/lyft_28px.png>",
             surgeText: "<img src=lyftAssets/primetime_custom.png> +",
             estimate: output.cost_estimates[i].estimated_cost_cents_min==output.cost_estimates[i].estimated_cost_cents_max?'$'+parseInt(output.cost_estimates[i].estimated_cost_cents_max/100)+'.'+(output.cost_estimates[i].estimated_cost_cents_max%100<10?'0'+output.cost_estimates[i].estimated_cost_cents_max%100:output.cost_estimates[i].estimated_cost_cents_max%100):'$'+parseInt(output.cost_estimates[i].estimated_cost_cents_min/100)+'-'+parseInt(output.cost_estimates[i].estimated_cost_cents_max/100),
