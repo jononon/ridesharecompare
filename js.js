@@ -110,7 +110,7 @@ $(document).ready(function () {
       return 0;
   }
   rides.sort(comparePrice);
-  tablehtml = "<tr><th>Ride</th><th>Cost</th><th>Go!</th></tr>";
+  tablehtml = "<tr><th>Ride</th><th>Cost</th><th>ETA</th><th>Go!</th></tr>";
   for (var i = 0; i < rides.length; i++) {
     tablehtml+='<tr><td>'+rides[i].name+'</td><td>'+rides[i].estimate+'</td><td>'+rides[i].eta+'</td><td><a href='+rides[i].orderLink+'><button type="button" class="btn btn-default">Request</button></a></td></tr>'
   }
