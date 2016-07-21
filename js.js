@@ -21,7 +21,7 @@ $(document).ready(function () {
     timeout: 5000,
   });
   $.ajax({
-    url: 'https://api.lyft.com/v1/cost?start_lat=34.146056&start_long=-118.746635&end_lat=34.048117&end_long=-118.5060167',
+    url: 'https://api.lyft.com/v1/cost?start_lat=34.146056&start_lng=-118.746635&end_lat=34.048117&end_lng=-118.5060167',
     dataType: 'json',
     success: function(output) {
       for (var i = 0; i < output.cost_estimates.length; i++) {
