@@ -12,6 +12,10 @@ $(document).ready(function() {
     beforeSend: function (xhr) {
       xhr.setRequestHeader ("Authorization", "Basic " + btoa("v3OmgqE86Nhu:197pfsoEIr-I_wYYBMA7-sUaMB9zknAx"));
     },
+    data: {
+      grant_type: 'client_credentials',
+      scope: 'public'
+    },
     success: function (output) {
       console.log(output);
     },
