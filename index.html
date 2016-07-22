@@ -32,14 +32,10 @@
               scrollwheel: true,
               zoom: 13
             });
-            var currLat, currLng, currAccuracy;
             navigator.geolocation.getCurrentPosition(function(location) {
-              currLat = location.coords.latitude;
-              currLng = location.coords.longitude;
-              currAccuracy = location.coords.accuracy;
               var currLoc = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
+                lat: location.coords.latitude,
+                lng: location.coords.longitude
               };
               map.setCenter(currLoc);
               var marker = new google.maps.Marker({
