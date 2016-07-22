@@ -119,12 +119,13 @@
             setInterval(function() {
               if(originMarker.position != undefined && destMarker.position != undefined) {
                 console.log("Recalculating");
+                $('#lastUpdated').html("Recalculating");
                 calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
               }
             },30000);
             $("#refresh").click(function(){
               if(originMarker.position != undefined && destMarker.position != undefined) {
-                console.log("Recalculating");
+                $('#prices').html("<center>Recalculating<br><img src=http://i.imgur.com/jfEmGpf.gif> </center>");
                 calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
               }
             });
