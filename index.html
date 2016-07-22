@@ -100,7 +100,7 @@
               suppressInfoWindows: true
             });
             directionsDisplay.setMap(map);
-            
+
             function update() {
               updateBounds();
               if(originMarker.position != undefined && destMarker.position != undefined)
@@ -116,7 +116,7 @@
               }, function(response, status) {
                 $('#tripTime').html("The trip will take "+response.routes[0].legs[0].duration.text+" via "+response.routes[0].summary);
                 if (status === google.maps.DirectionsStatus.OK)
-                  directionsDisplay.setDirections(response);
+                  //directionsDisplay.setDirections(response);
               });
             }
 
