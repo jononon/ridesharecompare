@@ -1,3 +1,26 @@
+function initMap() {
+  var center = {lat: 51.5037819, lng: -0.1643051};
+  // Create a map object and specify the DOM element for display.
+  var map = new google.maps.Map(document.getElementById('map'), {
+    center: center,
+    mapTypeControl: true,
+    mapTypeControlOptions: {
+      style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+      mapTypeIds: [
+        google.maps.MapTypeId.ROADMAP,
+        google.maps.MapTypeId.HYBRID
+      ]
+    },
+    scrollwheel: true,
+    zoom: 13
+  });
+  // Create a marker and set its position.
+  var marker = new google.maps.Marker({
+    map: map,
+    position: {lat: 51.491541, lng: -0.176366}
+  });
+}
+
 $(document).ready(function () {
   navigator.geolocation.getCurrentPosition(function(location) {
     console.log(location.coords.latitude);
@@ -135,26 +158,3 @@ $(document).ready(function () {
      -d '{"grant_type": "client_credentials", "scope": "public"}' \
      'https://api.lyft.com/oauth/token'
      */
-
-function initMap() {
-      var center = {lat: 51.5037819, lng: -0.1643051};
-      // Create a map object and specify the DOM element for display.
-      var map = new google.maps.Map(document.getElementById('map'), {
-        center: center,
-        mapTypeControl: true,
-        mapTypeControlOptions: {
-          style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-          mapTypeIds: [
-            google.maps.MapTypeId.ROADMAP,
-            google.maps.MapTypeId.HYBRID
-          ]
-        },
-        scrollwheel: true,
-        zoom: 13
-      });
-      // Create a marker and set its position.
-      var marker = new google.maps.Marker({
-        map: map,
-        position: {lat: 51.491541, lng: -0.176366}
-      });
-    }
