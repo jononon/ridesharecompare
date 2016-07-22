@@ -84,15 +84,42 @@
                 destMarker.setPosition(place.geometry.location);
               });
             });
+            originSearchBox.addListener('places_changed', function() {
+              var places = originSearchBox.getPlaces();
+
+              if (places.length == 0) {
+                return;
+              }
+              places.forEach(function(place){
+                if (originMarker == undefined)
+                originMarker = new google.maps.Marker({
+                  map:map,
+                  position: place.geometry.location,
+                  draggable: true,
+                  title: "End"
+                })
+                else
+                originMarker.setPosition(place.geometry.location);
+              });
+            });
             map.addListener('bounds_changed', function() {
               destinationSearchBox.setBounds(map.getBounds());
             });
-            var bounds = new google.maps.LatLngBounds();
-            if (originMarker != undefined)
-              bounds.extend(originMarker.position);
-            if (destMarker != undefined)
-              bounds.extend(destMarker.position);
-            map.fitBounds(bounds);
+            originMarker.addListener('position_changed', function() {
+              updateBounds();
+            });
+            destMarker.addListener('position_changed', function() {
+              updateBounds();
+            });
+            function updateBounds () {
+              var bounds = new google.maps.LatLngBounds();
+              if (originMarker != undefined)
+                bounds.extend(originMarker.position);
+              if (destMarker != undefined)
+                bounds.extend(destMarker.position);
+              map.fitBounds(bounds);
+            }
+
           }
         </script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-6Jk4A4RtRg_H0Kd0cFci3Bg52c8gzAY&libraries=places&callback=initMap"
