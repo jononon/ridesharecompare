@@ -17,6 +17,13 @@
       <div id="map" style="height:95%;width:100%;"></div>
         <script>
           function initMap() {
+            var currLat, currLng, currAccuracy;
+            navigator.geolocation.getCurrentPosition(function(location) {
+              currLat = location.coords.latitude;
+              currLng = location.coords.longitude;
+              currAccuracy = location.coords.accuracy;
+            });
+
             var center = {lat: currLat, lng: currLng};
             // Create a map object and specify the DOM element for display.
             var map = new google.maps.Map(document.getElementById('map'), {
