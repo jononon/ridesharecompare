@@ -85,10 +85,11 @@
               destinationSearchBox.setBounds(map.getBounds());
             });
             originMarker.addListener('position_changed', function() {
-              if(destMarker.position != undefined) {
+              /*if(destMarker.position != undefined) {
                 updateBounds();
                 calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
-              }
+              }*/
+              console.log(originMarker.position);
             });
             destMarker.addListener('position_changed', function() {
               updateBounds();
