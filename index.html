@@ -100,7 +100,7 @@
             var directionsService = new google.maps.DirectionsService;
             var directionsDisplay = new google.maps.DirectionsRenderer ({
               map: map,
-              suppressMarkers: false,
+              suppressMarkers: true,
               suppressInfoWindows: true
             });
             directionsDisplay.setMap(map);
@@ -120,7 +120,7 @@
               }, function(response, status) {
                 $('#tripTime').html("The trip will take "+response.routes[0].legs[0].duration.text+" via "+response.routes[0].summary);
                 if (status === google.maps.DirectionsStatus.OK) {
-                  //directionsDisplay.setDirections(response);
+                  directionsDisplay.setDirections(response);
                 }
               });
             }
