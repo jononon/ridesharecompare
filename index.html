@@ -39,32 +39,26 @@
             var destinationSearchBox = new google.maps.places.SearchBox(document.getElementById('destSearch'));
 
             var destMarker, originMarker;
+            originMarker = new google.maps.Marker({
+              map:map,
+              draggable: true,
+              title: "End"
+            });
+            destMarker = new google.maps.Marker({
+              map:map,
+              draggable: true,
+              title: "End"
+            });
             navigator.geolocation.getCurrentPosition(function(location) {
               var currLoc = {
                 lat: location.coords.latitude,
                 lng: location.coords.longitude
               };
-              map.setCenter(currLoc);
-              if (originMarker == undefined)
-                var marker = new google.maps.Marker({
-                  map: map,
-                  position: currLoc,
-                  draggable: true,
-                  title: "Start"
-                });
-              else
-                originMarker.setPosition(event.latLng);
+
+              originMarker.setPosition(event.latLng);
             });
             google.maps.event.addListener(map, "click", function(event) {
-              if (destMarker == undefined)
-                destMarker = new google.maps.Marker({
-                  map:map,
-                  position: event.latLng,
-                  draggable: true,
-                  title: "End"
-                })
-              else
-                destMarker.setPosition(event.latLng);
+              destMarker.setPosition(event.latLng);
             });
             destinationSearchBox.addListener('places_changed', function() {
               var places = destinationSearchBox.getPlaces();
@@ -73,14 +67,6 @@
                 return;
               }
               places.forEach(function(place){
-                if (destMarker == undefined)
-                destMarker = new google.maps.Marker({
-                  map:map,
-                  position: place.geometry.location,
-                  draggable: true,
-                  title: "End"
-                })
-                else
                 destMarker.setPosition(place.geometry.location);
               });
             });
@@ -91,14 +77,6 @@
                 return;
               }
               places.forEach(function(place){
-                if (originMarker == undefined)
-                originMarker = new google.maps.Marker({
-                  map:map,
-                  position: place.geometry.location,
-                  draggable: true,
-                  title: "End"
-                })
-                else
                 originMarker.setPosition(place.geometry.location);
               });
             });
@@ -113,10 +91,8 @@
             });
             function updateBounds () {
               var bounds = new google.maps.LatLngBounds();
-              if (originMarker != undefined)
-                bounds.extend(originMarker.position);
-              if (destMarker != undefined)
-                bounds.extend(destMarker.position);
+              bounds.extend(originMarker.position);
+              bounds.extend(destMarker.position);
               map.fitBounds(bounds);
             }
 
