@@ -19,7 +19,7 @@ $(document).ready(function() {
     async: false,
     timeout: 5000
   });
-}
+});
 function calculateRides (startLat, startLng, endLat, endLng) {
 
   var rides = [];
