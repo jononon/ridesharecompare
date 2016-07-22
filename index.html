@@ -36,7 +36,7 @@
             });
 
             var originSearchBox = new google.maps.places.SearchBox(document.getElementById('startSearch'));
-            var originSearchBox = new google.maps.places.SearchBox(document.getElementById('destSearch'));
+            var destinationSearchBox = new google.maps.places.SearchBox(document.getElementById('destSearch'));
 
             navigator.geolocation.getCurrentPosition(function(location) {
               var currLoc = {
@@ -63,8 +63,8 @@
               else
                 destMarker.setPosition(event.latLng);
             });
-            searchBox.addListener('places_changed', function() {
-              var places = searchBox.getPlaces();
+            destinationSearchBox.addListener('places_changed', function() {
+              var places = destinationSearchBox.getPlaces();
 
               if (places.length == 0) {
                 return;
@@ -82,7 +82,7 @@
               });
             });
             map.addListener('bounds_changed', function() {
-              searchBox.setBounds(map.getBounds());
+              destinationSearchBox.setBounds(map.getBounds());
             });
           }
         </script>
