@@ -9,8 +9,9 @@ $(document).ready(function() {
   $.ajax({
     url:"https://api.lyft.com/oauth/token",
     dataType:"json",
-    beforeSend: function (xhr) {
-      xhr.setRequestHeader ("Authorization", "Basic " + btoa("v3OmgqE86Nhu:197pfsoEIr-I_wYYBMA7-sUaMB9zknAx"));
+    headers: {
+        'Content-Type': 'application/json',
+        Authorization: "Basic " + btoa("v3OmgqE86Nhu:197pfsoEIr-I_wYYBMA7-sUaMB9zknAx")
     },
     data: {
       grant_type: 'client_credentials',
