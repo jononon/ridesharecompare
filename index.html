@@ -14,6 +14,8 @@
   <div class="panel panel-default">
     <div class="panel-heading">Map</div>
     <div class="panel-body" style="height:100%;width:100%;">
+      <input id="startSearch" type="text" class="form-control" placeholder="Search for an origin">
+      <input id="destSearch" type="text" class="form-control" placeholder="Search for a destination">
       <div id="map" style="height:95%;width:100%;"></div>
         <script>
           function initMap() {
@@ -32,6 +34,10 @@
               scrollwheel: true,
               zoom: 13
             });
+
+            var originSearchBox = new google.maps.places.SearchBox(document.getElementById('startSearch'));
+            var originSearchBox = new google.maps.places.SearchBox(document.getElementById('destSearch'));
+
             navigator.geolocation.getCurrentPosition(function(location) {
               var currLoc = {
                 lat: location.coords.latitude,
@@ -57,6 +63,23 @@
               else
                 destMarker.setPosition(event.latLng);
             });
+            searchBox.addListener('places_changed', function() {
+              var places = searchBox.getPlaces();
+
+              if (places.length == 0) {
+                return;
+              }
+              places.forEach(function(place){
+                if (destMarker == undefined)
+                destMarker = new google.maps.Marker({
+                  map:map,
+                  position: place.geometry.location,
+                  draggable: true,
+                  title: "End"
+                })
+                else
+                destMarker.setPosition(place.geometry.location);
+              });
           }
         </script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5vS6f3rvrcg_SgIpnO2N0tgEhZCZmjCQ&callback=initMap"
