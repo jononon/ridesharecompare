@@ -18,7 +18,7 @@ $(document).ready(function() {
       scope: 'public'
     }),
     success: function (output) {
-      console.log(output);
+      lyftToken = output.access_token;
     },
     type: "POST",
     contentType: "application/json",
