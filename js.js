@@ -127,7 +127,7 @@ $(document).ready(function () {
   for (var i = 0; i < rides.length; i++) {
     tablehtml+='<tr><td>'+rides[i].companyLogo+' '+rides[i].name+'</td><td>'+(rides[i].surge!=1?' '+rides[i].surgeText+' '+rides[i].surge:'')+'</td><td>'+rides[i].estimate+'</td><td>'+rides[i].eta+'</td><td><a href='+rides[i].orderLink+'><button type="button" class="btn btn-default">Request</button></a></td></tr>'
   }
-  $('#prices').append(tablehtml);
+  $('#prices').html(tablehtml);
 });
 /*curl -X POST -H "Content-Type: application/json" \
      --user "v3OmgqE86Nhu:197pfsoEIr-I_wYYBMA7-sUaMB9zknAx" \
