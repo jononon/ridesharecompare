@@ -73,7 +73,7 @@
               places.forEach(function(place){
                 destMarker.setPosition(place.geometry.location);
               });
-              
+
               updateBounds();
               if(originMarker.position != undefined)
                 calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
@@ -96,13 +96,13 @@
             map.addListener('bounds_changed', function() {
               destinationSearchBox.setBounds(map.getBounds());
             });
-            originMarker.addListener('mouseout', function() {
+            originMarker.addListener('mouseup', function() {
               if(destMarker.position != undefined) {
                 updateBounds();
                 calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
               }
             });
-            destMarker.addListener('mouseout', function() {
+            destMarker.addListener('mouseup', function() {
               updateBounds();
               if(originMarker.position != undefined)
                 calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
