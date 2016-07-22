@@ -105,6 +105,10 @@
               if(map.getZoom()>15)
                 map.setZoom(15);
             }
+            setInterval(function(){
+              if(originMarker.position != undefined && destMarker.position != undefined)
+              calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
+            },120000);
           }
         </script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-6Jk4A4RtRg_H0Kd0cFci3Bg52c8gzAY&libraries=places&callback=initMap"
