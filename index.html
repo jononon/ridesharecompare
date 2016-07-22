@@ -54,7 +54,8 @@
                 lat: location.coords.latitude,
                 lng: location.coords.longitude
               };
-
+              map.setCenter(currLoc);
+              map.setZoom(15);
               originMarker.setPosition(currLoc);
             });
             google.maps.event.addListener(map, "click", function(event) {
@@ -104,7 +105,6 @@
               if(map.getZoom()>15)
                 map.setZoom(15);
             }
-            updateBounds();
           }
         </script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-6Jk4A4RtRg_H0Kd0cFci3Bg52c8gzAY&libraries=places&callback=initMap"
