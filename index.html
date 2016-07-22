@@ -113,7 +113,7 @@
                 destination: end,
                 travelMode: google.maps.TravelMode.DRIVING
               }, function(response, status) {
-                $('#tripTime').html("The trip will take "+response.routes[0].legs[0].duration.text+" via "+response.routes[0].summary.text);
+                $('#tripTime').html("The trip will take "+response.routes[0].legs[0].duration.text+" via "+response.routes[0].summary);
                 if (status === google.maps.DirectionsStatus.OK)
                   directionsDisplay.setDirections(response);
               });
