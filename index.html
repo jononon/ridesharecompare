@@ -87,7 +87,7 @@
             map.addListener('bounds_changed', function() {
               destinationSearchBox.setBounds(map.getBounds());
             });
-            var bounds = new google.maps.latLngBounds();
+            var bounds = new google.maps.LatLngBounds();
             if (originMarker != undefined)
               bounds.extend(originMarker.position);
             if (destMarker != undefined)
