@@ -40,7 +40,11 @@
             // });
 
             var directionsService = new google.maps.DirectionsService;
-            var directionsDisplay = new google.maps.DirectionsRenderer;
+            var directionsDisplay = new google.maps.DirectionsRenderer ({
+              map: map,
+              suppressMarkers: true,
+              suppressInfoWindows: true
+            });
             directionsDisplay.setMap(map);
 
             var originSearchBox = new google.maps.places.SearchBox(document.getElementById('startSearch'));
