@@ -5,17 +5,13 @@ startLng = -118.748161;
 endLat = 34.0481852;
 endLng = -118.5038797;
 */
-//function calculateRides (startLat, startLng, endLat, endLng)
-$(document).ready(function () {
+function calculateRides (startLat, startLng, endLat, endLng)
   navigator.geolocation.getCurrentPosition(function(location) {
     currLat = location.coords.latitude;
     currLng = location.coords.longitude;
     currAccuracy = location.coords.accuracy;
   });
-  startLat = 34.145954;
-  startLng = -118.748161;
-  endLat = 34.0481852;
-  endLng = -118.5038797;
+  
   var rides = [];
   $.ajax({
     url: 'https://api.uber.com/v1/estimates/price?start_latitude='+startLat+'&start_longitude='+startLng+'&end_latitude='+endLat+'&end_longitude='+endLng+'&seat_count=1',
