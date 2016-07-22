@@ -90,8 +90,12 @@
 
               update();
             });
-            map.addListener('bounds_changed', update());
-            destMarker.addListener('mouseup', update());
+            map.addListener('bounds_changed', function(){
+              update()
+            });
+            destMarker.addListener('mouseup', function() {
+              update()
+            });
 
             var directionsService = new google.maps.DirectionsService;
             var directionsDisplay = new google.maps.DirectionsRenderer ({
