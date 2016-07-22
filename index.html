@@ -91,8 +91,10 @@
             });
             function updateBounds () {
               var bounds = new google.maps.LatLngBounds();
-              bounds.extend(originMarker.position);
-              bounds.extend(destMarker.position);
+              if(originMarker.position != undefined)
+                bounds.extend(originMarker.position);
+              if(destMarker.position != undefined)
+                bounds.extend(destMarker.position);
               map.fitBounds(bounds);
             }
 
