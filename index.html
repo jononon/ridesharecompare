@@ -113,6 +113,7 @@
                 destination: end,
                 travelMode: google.maps.TravelMode.DRIVING
               }, function(response, status) {
+                console.log(response);
                 if (status === google.maps.DirectionsStatus.OK)
                   directionsDisplay.setDirections(response);
               });
