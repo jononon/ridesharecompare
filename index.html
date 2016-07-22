@@ -55,7 +55,7 @@
                 lng: location.coords.longitude
               };
 
-              originMarker.setPosition(event.latLng);
+              originMarker.setPosition(currLoc);
             });
             google.maps.event.addListener(map, "click", function(event) {
               destMarker.setPosition(event.latLng);
