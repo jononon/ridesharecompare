@@ -116,13 +116,15 @@
               if(map.getZoom()>15)
                 map.setZoom(15);
             }
-            function recalculate() {
+            setInterval(function() {
               if(originMarker.position != undefined && destMarker.position != undefined) {
                 console.log("Recalculating");
                 calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
               }
-            }
-            setInterval(recalculate(),30000);
+            },30000);
+            $("#refresh").click(function(){
+                alert("button");
+            });
           }
         </script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-6Jk4A4RtRg_H0Kd0cFci3Bg52c8gzAY&libraries=places&callback=initMap"
@@ -131,7 +133,7 @@
   </div>
   <div class="panel panel-default">
     <div class="panel-heading">Fares
-      <button type="button" class="btn btn-default" aria-label="Right Align" style="float:right;" onclick="recalculate()">
+      <button id=refresh type="button" class="btn btn-default" aria-label="Right Align" style="float:right;" onclick="recalculate()">
         <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
       </button>
     </div>
