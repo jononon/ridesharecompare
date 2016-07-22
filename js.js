@@ -13,10 +13,10 @@ $(document).ready(function() {
         'Content-Type': 'application/json',
         Authorization: "Basic " + btoa("v3OmgqE86Nhu:197pfsoEIr-I_wYYBMA7-sUaMB9zknAx")
     },
-    data: {
+    data: JSON.stringify({
       grant_type: 'client_credentials',
       scope: 'public'
-    },
+    }),
     success: function (output) {
       console.log(output);
     },
