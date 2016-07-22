@@ -113,7 +113,7 @@
                 destination: end,
                 travelMode: google.maps.TravelMode.DRIVING
               }, function(response, status) {
-                console.log(response);
+                $('#tripTime').html("The trip will take "+response.routes[0].legs[0].duration.text+" via "+response.routes[0].summary.text);
                 if (status === google.maps.DirectionsStatus.OK)
                   directionsDisplay.setDirections(response);
               });
@@ -156,6 +156,8 @@
     </div>
     <div class="panel-body">
       Fares calculated include any surge pricing. ETA is an estimate of how long it will take for the driver to pick you up. Fares recalculate every minute.
+      <br>
+      <div id=tripTime></div>
     </div>
     <table id=prices class="table table-striped" style="font-size:14;"><tr><td>Please select your destination</table>
     <div class="panel-footer" id=lastUpdated></div>
