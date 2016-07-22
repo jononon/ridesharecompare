@@ -60,6 +60,9 @@
             });
             google.maps.event.addListener(map, "click", function(event) {
               destMarker.setPosition(event.latLng);
+              updateBounds();
+              if(originMarker.position != undefined)
+                calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
             });
             destinationSearchBox.addListener('places_changed', function() {
               var places = destinationSearchBox.getPlaces();
@@ -70,6 +73,10 @@
               places.forEach(function(place){
                 destMarker.setPosition(place.geometry.location);
               });
+              
+              updateBounds();
+              if(originMarker.position != undefined)
+                calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
             });
             originSearchBox.addListener('places_changed', function() {
               var places = originSearchBox.getPlaces();
@@ -80,20 +87,22 @@
               places.forEach(function(place){
                 originMarker.setPosition(place.geometry.location);
               });
+
+              if(destMarker.position != undefined) {
+                updateBounds();
+                calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
+              }
             });
             map.addListener('bounds_changed', function() {
               destinationSearchBox.setBounds(map.getBounds());
             });
-            originMarker.addListener('position_changed', function() {
-              recordedPosition = originMarker.position;
-              setTimeout(function() {
-                if(destMarker.position != undefined && recordedPosition == originMarker.position) {
-                  updateBounds();
-                  calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
-                }
-              }, 1000);
+            originMarker.addListener('mouseout', function() {
+              if(destMarker.position != undefined) {
+                updateBounds();
+                calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
+              }
             });
-            destMarker.addListener('position_changed', function() {
+            destMarker.addListener('mouseout', function() {
               updateBounds();
               if(originMarker.position != undefined)
                 calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
