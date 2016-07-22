@@ -39,13 +39,6 @@
             //   map: map,
             // });
 
-            var directionsService = new google.maps.DirectionsService;
-            var directionsDisplay = new google.maps.DirectionsRenderer ({
-              map: map,
-              suppressMarkers: false,
-              suppressInfoWindows: true
-            });
-            directionsDisplay.setMap(map);
 
             var originSearchBox = new google.maps.places.SearchBox(document.getElementById('startSearch'));
             var destinationSearchBox = new google.maps.places.SearchBox(document.getElementById('destSearch'));
@@ -100,6 +93,14 @@
             map.addListener('bounds_changed', update());
             destMarker.addListener('mouseup', update());
 
+            var directionsService = new google.maps.DirectionsService;
+            var directionsDisplay = new google.maps.DirectionsRenderer ({
+              map: map,
+              suppressMarkers: false,
+              suppressInfoWindows: true
+            });
+            directionsDisplay.setMap(map);
+            
             function update() {
               updateBounds();
               if(originMarker.position != undefined && destMarker.position != undefined)
