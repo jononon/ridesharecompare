@@ -104,7 +104,7 @@ function calculateRides (startLat, startLng, endLat, endLng) {
     },
     method: "GET",
     headers: {
-      "Authorization": "Bearer gAAAAABXkQMyvsFHAKvOJcT9uTFDy_jHYnIHzuS3gU-Ad3_GbD7E18UDtLGB_tzKTMw2Z9Az1Q5-gjR8k8la973MXE3cfAN7M5xF-kk-kk0pygUPvmS4mo7i8LAcfBr3_oVRH6nWYv8wTMOVfdhMh8KBfFEvqtdEyPtOZNUxlPAC9ljvrxEY6bE_svIcVGHSWx-n0lPxJPwDS6DHSFIo4fB9fM5R5kVGcg==",
+      "Authorization": "Bearer " + lyftToken
     },
     async: false,
     timeout: 5000,
@@ -126,7 +126,7 @@ function calculateRides (startLat, startLng, endLat, endLng) {
       },
     method: "GET",
     headers: {
-      "Authorization": "Bearer gAAAAABXkQMyvsFHAKvOJcT9uTFDy_jHYnIHzuS3gU-Ad3_GbD7E18UDtLGB_tzKTMw2Z9Az1Q5-gjR8k8la973MXE3cfAN7M5xF-kk-kk0pygUPvmS4mo7i8LAcfBr3_oVRH6nWYv8wTMOVfdhMh8KBfFEvqtdEyPtOZNUxlPAC9ljvrxEY6bE_svIcVGHSWx-n0lPxJPwDS6DHSFIo4fB9fM5R5kVGcg==",
+      "Authorization": "Bearer " + lyftToken
     },
     async: false,
     timeout: 5000,
