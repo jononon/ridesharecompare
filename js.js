@@ -1,10 +1,25 @@
-var currLat, currLng, currAccuracy;
 /*
 startLat = 34.145954;
 startLng = -118.748161;
 endLat = 34.0481852;
 endLng = -118.5038797;
 */
+var uberToken, lyftToken
+$(document).ready(function() {
+  $.ajax({
+    url:"https://api.lyft.com/oauth/token",
+    dataType:"json",
+    beforeSend: function (xhr) {
+      xhr.setRequestHeader ("Authorization", "Basic " + btoa(username + ":" + password));
+    },
+    success: function (output) {
+      console.log(output);
+    },
+    method: "GET",
+    async: false,
+    timeout: 5000
+  });
+}
 function calculateRides (startLat, startLng, endLat, endLng) {
 
   var rides = [];
