@@ -15,7 +15,7 @@ $(document).ready(function() {
     success: function (output) {
       console.log(output);
     },
-    method: "GET",
+    type: "POST",
     async: false,
     timeout: 5000
   });
