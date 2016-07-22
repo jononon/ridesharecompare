@@ -45,6 +45,18 @@
                 title: "Start"
               });
             });
+            var destMarker;
+            google.maps.event.addListener(map, "click", function(event) {
+              if (destMarker == undefined)
+                destMarker = new google.maps.Marker({
+                  map:map,
+                  position: event.latLng,
+                  draggable: true,
+                  title: "End"
+                })
+              else
+                destMarker.setPosition(event.latLng);
+            });
           }
         </script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5vS6f3rvrcg_SgIpnO2N0tgEhZCZmjCQ&callback=initMap"
