@@ -65,7 +65,6 @@
             });
             google.maps.event.addListener(map, "click", function(event) {
               destMarker.setPosition(event.latLng);
-              updateBounds();
               update();
             });
             destinationSearchBox.addListener('places_changed', function() {
