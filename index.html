@@ -99,8 +99,10 @@
                 bounds.extend(originMarker.position);
               if(destMarker.position != undefined)
                 bounds.extend(destMarker.position);
-              if(map.getZoom()>15)
+              if(map.getZoom()>15) {
+                console.log(map.getZoom());
                 map.setZoom(15);
+              }
               map.fitBounds(bounds);
             }
           }
