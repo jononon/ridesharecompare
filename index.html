@@ -86,12 +86,12 @@
             originMarker.addListener('position_changed', function() {
               updateBounds();
               if(destMarker.position != undefined)
-                calculateRides(originMarker.position.lat, originMarker.position.lng, destMarker.position.lat, destMarker.position.lng);
+                calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
             });
             destMarker.addListener('position_changed', function() {
               updateBounds();
               if(originMarker.position != undefined)
-                calculateRides(originMarker.position.lat, originMarker.position.lng, destMarker.position.lat, destMarker.position.lng);
+                calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
             });
             function updateBounds () {
               var bounds = new google.maps.LatLngBounds();
