@@ -38,20 +38,23 @@
             var originSearchBox = new google.maps.places.SearchBox(document.getElementById('startSearch'));
             var destinationSearchBox = new google.maps.places.SearchBox(document.getElementById('destSearch'));
 
+            var destMarker, originMarker;
             navigator.geolocation.getCurrentPosition(function(location) {
               var currLoc = {
                 lat: location.coords.latitude,
                 lng: location.coords.longitude
               };
               map.setCenter(currLoc);
-              var marker = new google.maps.Marker({
-                map: map,
-                position: currLoc,
-                draggable: true,
-                title: "Start"
-              });
+              if (originMarker == undefined)
+                var marker = new google.maps.Marker({
+                  map: map,
+                  position: currLoc,
+                  draggable: true,
+                  title: "Start"
+                });
+              else
+                originMarker.setPosition(event.latLng);
             });
-            var destMarker;
             google.maps.event.addListener(map, "click", function(event) {
               if (destMarker == undefined)
                 destMarker = new google.maps.Marker({
@@ -84,6 +87,12 @@
             map.addListener('bounds_changed', function() {
               destinationSearchBox.setBounds(map.getBounds());
             });
+            var bounds = new google.maps.latLngBounds();
+            if (originMarker != undefined)
+              bounds.extend(originMarker.position);
+            if (destMarker != undefined)
+              bounds.extend(destMarker.position);
+            map.fitBounds(bounds);
           }
         </script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-6Jk4A4RtRg_H0Kd0cFci3Bg52c8gzAY&libraries=places&callback=initMap"
