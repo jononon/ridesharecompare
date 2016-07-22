@@ -45,7 +45,7 @@ function calculateRides (startLat, startLng, endLat, endLng) {
             estimate: output.prices[i].estimate,
             service: "Uber",
             product_id: output.prices[i].product_id,
-            orderLink: 'https://m.uber.com/ul?action=setPickup&pickup[latitude]='+startLat+'&pickup[longitude]='+startLng+'&pickup[nickname]=inVia&pickup[formatted_address]=3304%20Derry%20Ave%2C%20Agoura%20Hills%2C%20CA%2091301&dropoff[latitude]='+endLat+'&dropoff[longitude]='+endLng+'&dropoff[formatted_address]=1124%20Napoli%20Drive%2C%20Pacific%20Palisades%2C%20CA%2090272&product_id='+output.prices[i].product_id,
+            orderLink: 'https://m.uber.com/ul?action=setPickup&pickup[latitude]='+startLat+'&pickup[longitude]='+startLng+'&dropoff[latitude]='+endLat+'&dropoff[longitude]='+endLng+'&product_id='+output.prices[i].product_id,
             eta: undefined
           }
         );
