@@ -10,7 +10,7 @@ $(document).ready(function() {
     url:"https://api.lyft.com/oauth/token",
     dataType:"json",
     beforeSend: function (xhr) {
-      xhr.setRequestHeader ("Authorization", "Basic " + btoa(username + ":" + password));
+      xhr.setRequestHeader ("Authorization", "Basic " + btoa("v3OmgqE86Nhu:197pfsoEIr-I_wYYBMA7-sUaMB9zknAx"));
     },
     success: function (output) {
       console.log(output);
