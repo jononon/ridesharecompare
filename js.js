@@ -5,7 +5,7 @@ $(document).ready(function () {
     console.log(location.coords.accuracy);
   });
   startLat = 34.145954;
-  startLng = -118.748221;
+  startLng = -118.748161;
   endLat = 34.0481852;
   endLng = -118.5038797;
   var rides = [];
@@ -20,8 +20,8 @@ $(document).ready(function () {
             highEstimate: output.prices[i].high_estimate,
             lowEstimate: output.prices[i].low_estimate,
             surge: output.prices[i].surge_multiplier,
-            companyLogo: "<img src=uberAssets/RIDESAPIICON/PNG/uber_rides_api_icon_1x_28px.png>",
-            surgeText: "<img src=uberAssets/UBERSURGEICON/PNGs/1x/Uber_Surge_Icon_28px.png>",
+            companyLogo: "<img src=uberAssets/RIDESAPIICON/PNG/uber_rides_api_icon_1x_16px.png>",
+            surgeText: "<img src=uberAssets/UBERSURGEICON/PNGs/1x/Uber_Surge_Icon_16px.png>",
             estimate: output.prices[i].estimate,
             service: "Uber",
             product_id: output.prices[i].product_id,
@@ -71,7 +71,7 @@ $(document).ready(function () {
             highEstimate: output.cost_estimates[i].estimated_cost_cents_max/100,
             lowEstimate: output.cost_estimates[i].estimated_cost_cents_min/100,
             surge: output.cost_estimates[i].primetime_percentage=='0%'?1:output.cost_estimates[i].primetime_percentage,
-            companyLogo: "<img src=lyftAssets/pngs/1x/lyft_28px.png>",
+            companyLogo: "<img src=lyftAssets/pngs/1x/lyft_16px.png>",
             surgeText: "<img src=lyftAssets/primetime_custom.png> +",
             estimate: output.cost_estimates[i].estimated_cost_cents_min==output.cost_estimates[i].estimated_cost_cents_max?'$'+parseInt(output.cost_estimates[i].estimated_cost_cents_max/100)+'.'+(output.cost_estimates[i].estimated_cost_cents_max%100<10?'0'+output.cost_estimates[i].estimated_cost_cents_max%100:output.cost_estimates[i].estimated_cost_cents_max%100):'$'+parseInt(output.cost_estimates[i].estimated_cost_cents_min/100)+'-'+parseInt(output.cost_estimates[i].estimated_cost_cents_max/100),
             service: "Lyft",
@@ -137,7 +137,7 @@ $(document).ready(function () {
      */
 
 function initMap() {
-      var center = {lat: 51.5037819, lng: -0.2243051};
+      var center = {lat: 51.5037819, lng: -0.1643051};
       // Create a map object and specify the DOM element for display.
       var map = new google.maps.Map(document.getElementById('map'), {
         center: center,
