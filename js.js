@@ -16,6 +16,7 @@ $(document).ready(function() {
       console.log(output);
     },
     type: "POST",
+    contentType: "application/json",
     async: false,
     timeout: 5000
   });
