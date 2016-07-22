@@ -84,9 +84,10 @@
               destinationSearchBox.setBounds(map.getBounds());
             });
             originMarker.addListener('position_changed', function() {
-              updateBounds();
-              if(destMarker.position != undefined)
+              if(destMarker.position != undefined) {
+                updateBounds();
                 calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
+              }
             });
             destMarker.addListener('position_changed', function() {
               updateBounds();
@@ -99,12 +100,11 @@
                 bounds.extend(originMarker.position);
               if(destMarker.position != undefined)
                 bounds.extend(destMarker.position);
-              if(map.getZoom()>15) {
-                console.log(map.getZoom());
-                map.setZoom(15);
-              }
               map.fitBounds(bounds);
+              if(map.getZoom()>15)
+                map.setZoom(15);
             }
+            updateBounds();
           }
         </script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-6Jk4A4RtRg_H0Kd0cFci3Bg52c8gzAY&libraries=places&callback=initMap"
