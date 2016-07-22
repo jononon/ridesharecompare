@@ -85,11 +85,13 @@
               destinationSearchBox.setBounds(map.getBounds());
             });
             originMarker.addListener('position_changed', function() {
-              /*if(destMarker.position != undefined) {
-                updateBounds();
-                calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
-              }*/
-              console.log(originMarker.position);
+              recordedPosition = originMarker.position;
+              setTimeout(function() {
+                if(destMarker.position != undefined && recordedPosition == originMarker.position) {
+                  updateBounds();
+                  calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
+                }
+              }, 1000);
             });
             destMarker.addListener('position_changed', function() {
               updateBounds();
