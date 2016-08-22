@@ -133,6 +133,28 @@
                 travelMode: google.maps.TravelMode.TRANSIT
               }, function(response, status) {
                 console.log(response);
+                if(status === google.maps.DirectonsStatus.OK) {
+                  description = "";
+                  travelTime = 0;
+                  for (var i = 0; i < response.routes[0].legs.length; i++) {
+                    travelTime+=response.routes[0].legs[i].duration.value;
+                    if(response.routes[0].legs[i].travel_mode == "TRANSIT")
+                      description += "<img src="+response.routes[0].legs[i].line.vehichle.local_icon+"></img> "+response.routes[0].legs[i].line.short_name+" &#x25b6; ";
+                  }
+                  return ({
+                    name: description,
+                    highEstimate: "",
+                    lowEstimate: "",
+                    surge: "",
+                    companyLogo: "",
+                    surgeText: "",
+                    estimate: output.prices[i].estimate,
+                    service: "Transit",
+                    product_id: output.prices[i].product_id,
+                    orderLink: 'https://m.uber.com/ul?action=setPickup&pickup[latitude]='+startLat+'&pickup[longitude]='+startLng+'&dropoff[latitude]='+endLat+'&dropoff[longitude]='+endLng+'&product_id='+output.prices[i].product_id,
+                    eta: (travelTime/60/60>=1)?""+parseInt(travelTime/60/60)+" hours and "+travelTime/60%60+" minutes";
+                  });
+                }
               });
             }
 
