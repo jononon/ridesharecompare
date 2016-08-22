@@ -269,38 +269,6 @@ function initMap() {
     });
   }
 
-  function calculateTransitTimes(start, end) {
-    directionsService.route({
-      origin: start,
-      destination: end,
-      travelMode: google.maps.TravelMode.TRANSIT
-    }, function(response, status) {
-      if(status === google.maps.DirectonsStatus.OK) {
-        description = "";
-        travelTime = 0;
-        for (var i = 0; i < response.routes[0].legs.length; i++) {
-          travelTime+=response.routes[0].legs[i].duration.value;
-          if(response.routes[0].legs[i].travel_mode == "TRANSIT")
-            description += "<img src="+response.routes[0].legs[i].line.vehichle.local_icon+"></img> "+response.routes[0].legs[i].line.short_name+((i<response.routes[0].legs.length-1)?" &#x25b6; ":"");
-        }
-        return ({
-          name: description,
-          highEstimate: "",
-          lowEstimate: "",
-          surge: "",
-          companyLogo: "",
-          surgeText: "",
-          estimate: output.prices[i].estimate,
-          service: "Transit",
-          product_id: output.prices[i].product_id,
-          orderLink: 'https://m.uber.com/ul?action=setPickup&pickup[latitude]='+startLat+'&pickup[longitude]='+startLng+'&dropoff[latitude]='+endLat+'&dropoff[longitude]='+endLng+'&product_id='+output.prices[i].product_id,
-          eta: ((travelTime/60/60>=1)?""+parseInt(travelTime/60/60)+" hours and ":"")+travelTime/60%60+" minutes"
-        });
-      }
-    });
-    return undefined;
-  }
-
   function updateBounds () {
     var bounds = new google.maps.LatLngBounds();
     if(originMarker.position != undefined)
@@ -324,4 +292,36 @@ function initMap() {
       calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
     }
   });
+}
+
+function calculateTransitTimes(start, end) {
+  directionsService.route({
+    origin: start,
+    destination: end,
+    travelMode: google.maps.TravelMode.TRANSIT
+  }, function(response, status) {
+    if(status === google.maps.DirectonsStatus.OK) {
+      description = "";
+      travelTime = 0;
+      for (var i = 0; i < response.routes[0].legs.length; i++) {
+        travelTime+=response.routes[0].legs[i].duration.value;
+        if(response.routes[0].legs[i].travel_mode == "TRANSIT")
+          description += "<img src="+response.routes[0].legs[i].line.vehichle.local_icon+"></img> "+response.routes[0].legs[i].line.short_name+((i<response.routes[0].legs.length-1)?" &#x25b6; ":"");
+      }
+      return ({
+        name: description,
+        highEstimate: "",
+        lowEstimate: "",
+        surge: "",
+        companyLogo: "",
+        surgeText: "",
+        estimate: output.prices[i].estimate,
+        service: "Transit",
+        product_id: output.prices[i].product_id,
+        orderLink: 'https://m.uber.com/ul?action=setPickup&pickup[latitude]='+startLat+'&pickup[longitude]='+startLng+'&dropoff[latitude]='+endLat+'&dropoff[longitude]='+endLng+'&product_id='+output.prices[i].product_id,
+        eta: ((travelTime/60/60>=1)?""+parseInt(travelTime/60/60)+" hours and ":"")+travelTime/60%60+" minutes"
+      });
+    }
+  });
+  return undefined;
 }
