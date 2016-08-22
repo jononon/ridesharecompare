@@ -18,7 +18,9 @@
       <input id="startSearch" type="text" class="form-control" placeholder="Search for an origin">
       <input id="destSearch" type="text" class="form-control" placeholder="Search for a destination">
       <div id="map" style="height:340px;width:100%;"></div>
+        <!--
         <script>
+
           function initMap() {
 
             // Create a map object and specify the DOM element for display.
@@ -137,7 +139,7 @@
                   for (var i = 0; i < response.routes[0].legs.length; i++) {
                     travelTime+=response.routes[0].legs[i].duration.value;
                     if(response.routes[0].legs[i].travel_mode == "TRANSIT")
-                      description += "<img src="+response.routes[0].legs[i].line.vehichle.local_icon+"></img> "+response.routes[0].legs[i].line.short_name+" &#x25b6; ";
+                      description += "<img src="+response.routes[0].legs[i].line.vehichle.local_icon+"></img> "+response.routes[0].legs[i].line.short_name+((i<response.routes[0].legs.length-1)?" &#x25b6; ":"");
                   }
                   return ({
                     name: description,
@@ -181,7 +183,7 @@
               }
             });
           }
-        </script>
+        </script>-->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-6Jk4A4RtRg_H0Kd0cFci3Bg52c8gzAY&libraries=places&callback=initMap"
           async defer></script>
     </div>
