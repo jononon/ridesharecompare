@@ -132,6 +132,14 @@ function calculateRides (startLat, startLng, endLat, endLng) {
     async: false,
     timeout: 5000,
   });
+  var start = {
+    lat:startLat,
+    lng:startLng
+  }
+  var end = {
+    lat:endLat,
+    lng:endLng
+  }
   transit = calculateTransitTimes(start, end);
   if(transit!=undefined) {
     rides.push(transit);
