@@ -300,7 +300,7 @@ function calculateTransitTimes(start, end) {
     destination: end,
     travelMode: google.maps.TravelMode.TRANSIT
   }, function(response, status) {
-    if(status === google.maps.DirectonsStatus.OK) {
+    if(status === "OK") {
       description = "";
       travelTime = 0;
       for (var i = 0; i < response.routes[0].legs.length; i++) {
