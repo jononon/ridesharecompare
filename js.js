@@ -163,6 +163,7 @@ function calculateRides (startLat, startLng, endLat, endLng) {
   $('#prices').html(tablehtml);
   $('#lastUpdated').html("Last Updated: "+(new Date()).toLocaleString());
 }
+var directionsService = new google.maps.DirectionsService;
 function initMap() {
 
   // Create a map object and specify the DOM element for display.
@@ -242,7 +243,6 @@ function initMap() {
     update();
   });
 
-  var directionsService = new google.maps.DirectionsService;
   var directionsDisplay = new google.maps.DirectionsRenderer ({
     map: map,
     suppressMarkers: true,
