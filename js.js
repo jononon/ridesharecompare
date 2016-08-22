@@ -131,7 +131,10 @@ function calculateRides (startLat, startLng, endLat, endLng) {
     async: false,
     timeout: 5000,
   });
-
+  transit = calculateTransitTimes(start, end);
+  if(transit!=undefined) {
+    rides.push(transit);
+  }
   function comparePrice(a,b) {
     comparisonPriceA = (a.highEstimate+a.lowEstimate)/2;
     comparisonPriceB = (b.highEstimate+b.lowEstimate)/2;
