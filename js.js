@@ -163,134 +163,136 @@ function calculateRides (startLat, startLng, endLat, endLng) {
   $('#prices').html(tablehtml);
   $('#lastUpdated').html("Last Updated: "+(new Date()).toLocaleString());
 }
-
-// Create a map object and specify the DOM element for display.
-var map = new google.maps.Map(document.getElementById('map'), {
-  mapTypeControl: true,
-  mapTypeControlOptions: {
-    style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-    mapTypeIds: [
-      google.maps.MapTypeId.ROADMAP,
-      google.maps.MapTypeId.HYBRID
-    ]
-  },
-  scrollwheel: true,
-  zoom: 13
-});
-
-// var traffic = new google.maps.TrafficLayer({
-//   map: map,
-// });
-
-
-var originSearchBox = new google.maps.places.SearchBox(document.getElementById('startSearch'));
-var destinationSearchBox = new google.maps.places.SearchBox(document.getElementById('destSearch'));
-
-var destMarker, originMarker;
-originMarker = new google.maps.Marker({
-  map:map,
-  draggable: true,
-  title: "End"
-});
-destMarker = new google.maps.Marker({
-  map:map,
-  draggable: true,
-  title: "End"
-});
-navigator.geolocation.getCurrentPosition(function(location) {
-  var currLoc = {
-    lat: location.coords.latitude,
-    lng: location.coords.longitude
-  };
-  map.setCenter(currLoc);
-  map.setZoom(15);
-  originMarker.setPosition(currLoc);
-});
-google.maps.event.addListener(map, "click", function(event) {
-  destMarker.setPosition(event.latLng);
-  update();
-});
-destinationSearchBox.addListener('places_changed', function() {
-  var places = destinationSearchBox.getPlaces();
-
-  if (places.length == 0)
-    return;
-
-  places.forEach(function(place){
-    destMarker.setPosition(place.geometry.location);
+var directionsService;
+function initMap() {
+  // Create a map object and specify the DOM element for display.
+  var map = new google.maps.Map(document.getElementById('map'), {
+    mapTypeControl: true,
+    mapTypeControlOptions: {
+      style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+      mapTypeIds: [
+        google.maps.MapTypeId.ROADMAP,
+        google.maps.MapTypeId.HYBRID
+      ]
+    },
+    scrollwheel: true,
+    zoom: 13
   });
-  updateBounds();
-  update();
-});
-originSearchBox.addListener('places_changed', function() {
-  var places = originSearchBox.getPlaces();
 
-  if (places.length == 0)
-    return;
+  // var traffic = new google.maps.TrafficLayer({
+  //   map: map,
+  // });
 
-  places.forEach(function(place){
-    originMarker.setPosition(place.geometry.location);
+
+  var originSearchBox = new google.maps.places.SearchBox(document.getElementById('startSearch'));
+  var destinationSearchBox = new google.maps.places.SearchBox(document.getElementById('destSearch'));
+
+  var destMarker, originMarker;
+  originMarker = new google.maps.Marker({
+    map:map,
+    draggable: true,
+    title: "End"
   });
-  updateBounds();
-  update();
-});
-map.addListener('bounds_changed', function(){
-  destinationSearchBox.setBounds(map.getBounds());
-});
-destMarker.addListener('mouseup', function() {
-  update();
-});
+  destMarker = new google.maps.Marker({
+    map:map,
+    draggable: true,
+    title: "End"
+  });
+  navigator.geolocation.getCurrentPosition(function(location) {
+    var currLoc = {
+      lat: location.coords.latitude,
+      lng: location.coords.longitude
+    };
+    map.setCenter(currLoc);
+    map.setZoom(15);
+    originMarker.setPosition(currLoc);
+  });
+  google.maps.event.addListener(map, "click", function(event) {
+    destMarker.setPosition(event.latLng);
+    update();
+  });
+  destinationSearchBox.addListener('places_changed', function() {
+    var places = destinationSearchBox.getPlaces();
 
-var directionsService = new google.maps.DirectionsService;
-var directionsDisplay = new google.maps.DirectionsRenderer ({
-  map: map,
-  suppressMarkers: true,
-  suppressInfoWindows: true
-});
-directionsDisplay.setMap(map);
+    if (places.length == 0)
+      return;
 
-function update() {
-  if(originMarker.position != undefined && destMarker.position != undefined)
-  calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
-  calculateAndDisplayRoute(originMarker.position, destMarker.position);
-}
+    places.forEach(function(place){
+      destMarker.setPosition(place.geometry.location);
+    });
+    updateBounds();
+    update();
+  });
+  originSearchBox.addListener('places_changed', function() {
+    var places = originSearchBox.getPlaces();
 
-function calculateAndDisplayRoute(start, end) {
-  directionsService.route({
-    origin: start,
-    destination: end,
-    travelMode: google.maps.TravelMode.DRIVING
-  }, function(response, status) {
-    $('#tripTime').html("The trip will take "+response.routes[0].legs[0].duration.text+" via "+response.routes[0].summary);
-    if (status === google.maps.DirectionsStatus.OK) {
-      directionsDisplay.setDirections(response);
+    if (places.length == 0)
+      return;
+
+    places.forEach(function(place){
+      originMarker.setPosition(place.geometry.location);
+    });
+    updateBounds();
+    update();
+  });
+  map.addListener('bounds_changed', function(){
+    destinationSearchBox.setBounds(map.getBounds());
+  });
+  destMarker.addListener('mouseup', function() {
+    update();
+  });
+
+  directionsService = new google.maps.DirectionsService;
+  var directionsDisplay = new google.maps.DirectionsRenderer ({
+    map: map,
+    suppressMarkers: true,
+    suppressInfoWindows: true
+  });
+  directionsDisplay.setMap(map);
+
+  function update() {
+    if(originMarker.position != undefined && destMarker.position != undefined)
+    calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
+    calculateAndDisplayRoute(originMarker.position, destMarker.position);
+  }
+
+  function calculateAndDisplayRoute(start, end) {
+    directionsService.route({
+      origin: start,
+      destination: end,
+      travelMode: google.maps.TravelMode.DRIVING
+    }, function(response, status) {
+      $('#tripTime').html("The trip will take "+response.routes[0].legs[0].duration.text+" via "+response.routes[0].summary);
+      if (status === google.maps.DirectionsStatus.OK) {
+        directionsDisplay.setDirections(response);
+      }
+    });
+  }
+
+  function updateBounds () {
+    var bounds = new google.maps.LatLngBounds();
+    if(originMarker.position != undefined)
+      bounds.extend(originMarker.position);
+    if(destMarker.position != undefined)
+      bounds.extend(destMarker.position);
+    map.fitBounds(bounds);
+    if(map.getZoom()>15)
+      map.setZoom(15);
+  }
+
+  setInterval(function() {
+    if(originMarker.position != undefined && destMarker.position != undefined) {
+      console.log("Recalculating");
+      calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
+    }
+  },60000);
+
+  $("#refresh").click(function(){
+    if(originMarker.position != undefined && destMarker.position != undefined) {
+      calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
     }
   });
 }
-
-function updateBounds () {
-  var bounds = new google.maps.LatLngBounds();
-  if(originMarker.position != undefined)
-    bounds.extend(originMarker.position);
-  if(destMarker.position != undefined)
-    bounds.extend(destMarker.position);
-  map.fitBounds(bounds);
-  if(map.getZoom()>15)
-    map.setZoom(15);
-}
-
-setInterval(function() {
-  if(originMarker.position != undefined && destMarker.position != undefined) {
-    console.log("Recalculating");
-    calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
-  }
-},60000);
-
-$("#refresh").click(function(){
-  if(originMarker.position != undefined && destMarker.position != undefined) {
-    calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
-  }
-});
 
 function calculateTransitTimes(start, end) {
   directionsService.route({
