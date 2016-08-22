@@ -141,7 +141,7 @@
                     if(response.routes[0].legs[i].travel_mode == "TRANSIT")
                       description += "<img src="+response.routes[0].legs[i].line.vehichle.local_icon+"></img> "+response.routes[0].legs[i].line.short_name+" &#x25b6; ";
                   }
-                  obj = {
+                  var obj = {
                     name: description,
                     highEstimate: "",
                     lowEstimate: "",
