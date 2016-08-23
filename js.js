@@ -315,7 +315,7 @@ function calculateTransitTimes(start, end) {
         surge: "",
         companyLogo: "",
         surgeText: "",
-        estimate:,
+        estimate:"",
         service: "Transit",
         product_id: "Transit",
         orderLink: 'https://m.uber.com/ul?action=setPickup&pickup[latitude]='+startLat+'&pickup[longitude]='+startLng+'&dropoff[latitude]='+endLat+'&dropoff[longitude]='+endLng+'&product_id='+output.prices[i].product_id,
