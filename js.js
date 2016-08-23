@@ -306,7 +306,7 @@ function calculateTransitTimes(start, end) {
       travelTime = 0;
       for (var i = 0; i < response.routes[0].legs[0].steps.length; i++) {
         travelTime+=response.routes[0].legs[0].steps[i].duration.value;
-        if(response.routes[0].legs[0].steps[i]travel_mode == "TRANSIT")
+        if(response.routes[0].legs[0].steps[i].travel_mode == "TRANSIT")
           description += "<img src="+response.routes[0].legs[0].steps[i].line.vehichle.local_icon+"></img> "+response.routes[0].legs[0].steps[i].line.short_name+((i<response.routes[0].legs.length-1)?" &#x25b6; ":"");
       }
       return {
