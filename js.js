@@ -318,7 +318,7 @@ function calculateTransitTimes(start, end) {
         estimate:"",
         service: "Transit",
         product_id: "Transit",
-        orderLink: 'https://www.google.com/maps/dir/'+start.lat+','+start.lng+'/'+end.lat+','end.lng,
+        orderLink: 'https://www.google.com/maps/dir/'+start.lat+','+start.lng+'/'+end.lat+','+end.lng,
         eta: ((travelTime/60/60>=1)?""+parseInt(travelTime/60/60)+" hours and ":"")+travelTime/60%60+" minutes"
       });
     }
