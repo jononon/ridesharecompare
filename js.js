@@ -300,7 +300,7 @@ function calculateTransitTimes(start, end) {
     destination: end,
     travelMode: google.maps.TravelMode.TRANSIT
   }, function(response, status) {
-    var data;
+    var data = undefined;
     if(status === "OK") {
       description = "";
       travelTime = 0;
@@ -323,9 +323,8 @@ function calculateTransitTimes(start, end) {
         eta: ((travelTime/60/60>=1)?""+parseInt(travelTime/60/60)+" hours and ":"")+travelTime/60%60+" minutes"
       };
 
-    } else {
-      data = undefined;
     }
+    console.log(data);
     return data;
   });
 }
