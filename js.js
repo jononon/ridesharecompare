@@ -308,7 +308,7 @@ function calculateTransitTimes(start, end) {
         if(response.routes[0].legs[i].travel_mode == "TRANSIT")
           description += "<img src="+response.routes[0].legs[i].line.vehichle.local_icon+"></img> "+response.routes[0].legs[i].line.short_name+((i<response.routes[0].legs.length-1)?" &#x25b6; ":"");
       }
-      return ({
+      var data = {
         name: description,
         highEstimate: "",
         lowEstimate: "",
@@ -320,7 +320,8 @@ function calculateTransitTimes(start, end) {
         product_id: "Transit",
         orderLink: 'https://www.google.com/maps/dir/'+start.lat+','+start.lng+'/'+end.lat+','+end.lng,
         eta: ((travelTime/60/60>=1)?""+parseInt(travelTime/60/60)+" hours and ":"")+travelTime/60%60+" minutes"
-      });
+      };
+      return data;
     } else {
       return undefined;
     }
