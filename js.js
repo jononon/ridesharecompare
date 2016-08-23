@@ -140,7 +140,7 @@ function calculateRides (startLat, startLng, endLat, endLng) {
     lat:endLat,
     lng:endLng
   }
-  transit = calculateTransitTimes(start, end);
+  var transit = calculateTransitTimes(start, end);
   if(transit!=undefined) {
     rides.push(transit);
   }
