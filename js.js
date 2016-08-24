@@ -302,8 +302,8 @@ function calculateTransitTimes(start, end) {
   }, function(response, status) {
     var data = undefined;
     if(status == "OK") {
-      description = "";
-      travelTime = 0;
+      var description = "";
+      var travelTime = 0;
       for (var i = 0; i < response.routes[0].legs[0].steps.length; i++) {
         travelTime+=response.routes[0].legs[0].steps[i].duration.value;
         if(response.routes[0].legs[0].steps[i].travel_mode == "TRANSIT")
