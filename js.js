@@ -28,8 +28,8 @@ $(document).ready(function() {
 });
 
 function calculateRides (startLat, startLng, endLat, endLng) {
+
   var rides = [];
-  var transit = calculateTransitTimes(start, end);
   $.ajax({
     url: 'https://api.uber.com/v1/estimates/price?start_latitude='+startLat+'&start_longitude='+startLng+'&end_latitude='+endLat+'&end_longitude='+endLng+'&seat_count=1',
     dataType: 'json',
@@ -140,6 +140,7 @@ function calculateRides (startLat, startLng, endLat, endLng) {
     lat:endLat,
     lng:endLng
   }
+  var transit = calculateTransitTimes(start, end);
   if(transit!=undefined) {
     rides.push(transit);
   }
