@@ -301,7 +301,7 @@ function calculateTransitTimes(start, end) {
     travelMode: google.maps.TravelMode.TRANSIT
   }, function(response, status) {
     var data = undefined;
-    if(status === "OK") {
+    if(status == "OK") {
       description = "";
       travelTime = 0;
       for (var i = 0; i < response.routes[0].legs[0].steps.length; i++) {
