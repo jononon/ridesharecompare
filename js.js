@@ -307,7 +307,7 @@ function calculateTransitTimes(start, end) {
       for (var i = 0; i < response.routes[0].legs[0].steps.length; i++) {
         travelTime+=response.routes[0].legs[0].steps[i].duration.value;
         if(response.routes[0].legs[0].steps[i].travel_mode == "TRANSIT")
-          description += "<img src="+((response.routes[0].legs[0].steps[i].transit.line.vehichle.local_icon==undefined)?response.routes[0].legs[0].steps[i].transit.line.vehichle.icon:response.routes[0].legs[0].steps[i].transit.line.vehichle.local_icon)+"></img> "+response.routes[0].legs[0].steps[i].transit.line.short_name+((i<response.routes[0].legs.length-1)?" &#x25b6; ":"");
+          description += "<img src="+((response.routes[0].legs[0].steps[i].transit.line.vehicle.local_icon==undefined)?response.routes[0].legs[0].steps[i].transit.line.vehicle.icon:response.routes[0].legs[0].steps[i].transit.line.vehicle.local_icon)+"></img> "+response.routes[0].legs[0].steps[i].transit.line.short_name+((i<response.routes[0].legs.length-1)?" &#x25b6; ":"");
       }
       return {
         name: description,
