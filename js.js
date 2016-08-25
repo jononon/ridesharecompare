@@ -180,17 +180,16 @@ function calculateRides (startLat, startLng, endLat, endLng) {
         service: "Transit",
         product_id: "Transit",
         orderLink: 'https://www.google.com/maps/dir/'+start.lat+','+start.lng+'/'+end.lat+','+end.lng,
-        eta: ((travelTime/60/60>=1)?""+parseInt(travelTime/60/60)+" hours and ":"")+travelTime/60%60+" minutes"
+        eta: ((travelTime/60/60>=1)?""+parseInt(travelTime/60/60)+" hours and ":"")+parseInt(travelTime/60%60)+" minutes"
       });
     }
+    tablehtml = "<tr><th>Ride</th><th>"/*surge*/+"</th><th>Cost</th><th>ETA</th><th></th></tr>";
+    for (var i = 0; i < rides.length; i++) {
+      tablehtml+='<tr><td>'+rides[i].companyLogo+' '+rides[i].name+'</td><td>'+(rides[i].surge!=1?' '+rides[i].surgeText+' '+rides[i].surge:'')+'</td><td>'+rides[i].estimate+'</td><td>'+rides[i].eta+'</td><td><a href='+rides[i].orderLink+'><button type="button" class="btn btn-default">Go!</button></a></td></tr>'
+    }
+    $('#prices').html(tablehtml);
+    $('#lastUpdated').html("Last Updated: "+(new Date()).toLocaleString());
   });
-
-  tablehtml = "<tr><th>Ride</th><th>"/*surge*/+"</th><th>Cost</th><th>ETA</th><th></th></tr>";
-  for (var i = 0; i < rides.length; i++) {
-    tablehtml+='<tr><td>'+rides[i].companyLogo+' '+rides[i].name+'</td><td>'+(rides[i].surge!=1?' '+rides[i].surgeText+' '+rides[i].surge:'')+'</td><td>'+rides[i].estimate+'</td><td>'+rides[i].eta+'</td><td><a href='+rides[i].orderLink+'><button type="button" class="btn btn-default">Go!</button></a></td></tr>'
-  }
-  $('#prices').html(tablehtml);
-  $('#lastUpdated').html("Last Updated: "+(new Date()).toLocaleString());
 }
 function initMap() {
   // Create a map object and specify the DOM element for display.
