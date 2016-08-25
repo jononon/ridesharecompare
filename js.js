@@ -190,6 +190,8 @@ function calculateRides (startLat, startLng, endLat, endLng) {
     $('#prices').html(tablehtml);
     $('#lastUpdated').html("Last Updated: "+(new Date()).toLocaleString());
   });
+  $("#loadingIcon").hide();
+  $("body").removeClass("grey");
 }
 function initMap() {
   // Create a map object and specify the DOM element for display.
@@ -287,9 +289,6 @@ function initMap() {
       $("#loadingIcon").show();
       calculateAndDisplayRoute(originMarker.position, destMarker.position);
       calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
-      $("#loadingIcon").hide();
-      $("body").removeClass("grey");
-
     }
   }
 
