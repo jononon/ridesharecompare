@@ -142,6 +142,19 @@ function calculateRides (startLat, startLng, endLat, endLng) {
     lat:endLat,
     lng:endLng
   }
+
+  function comparePrice(a,b) {
+    comparisonPriceA = (a.highEstimate+a.lowEstimate)/2;
+    comparisonPriceB = (b.highEstimate+b.lowEstimate)/2;
+    if(comparisonPriceA < comparisonPriceB)
+      return -1;
+    else if(comparisonPriceA > comparisonPriceB)
+      return 1;
+    else
+      return 0;
+  }
+  rides.sort(comparePrice);
+
   directionsService.route({
     origin: start,
     destination: end,
@@ -158,8 +171,8 @@ function calculateRides (startLat, startLng, endLat, endLng) {
       }
       rides.push({
         name: description,
-        highEstimate: "",
-        lowEstimate: "",
+        highEstimate: 0,
+        lowEstimate: 0,
         surge: "",
         companyLogo: "",
         surgeText: "",
@@ -172,17 +185,6 @@ function calculateRides (startLat, startLng, endLat, endLng) {
     }
   });
 
-  function comparePrice(a,b) {
-    comparisonPriceA = (a.highEstimate+a.lowEstimate)/2;
-    comparisonPriceB = (b.highEstimate+b.lowEstimate)/2;
-    if(comparisonPriceA < comparisonPriceB)
-      return -1;
-    else if(comparisonPriceA > comparisonPriceB)
-      return 1;
-    else
-      return 0;
-  }
-  rides.sort(comparePrice);
   tablehtml = "<tr><th>Ride</th><th>"/*surge*/+"</th><th>Cost</th><th>ETA</th><th></th></tr>";
   for (var i = 0; i < rides.length; i++) {
     tablehtml+='<tr><td>'+rides[i].companyLogo+' '+rides[i].name+'</td><td>'+(rides[i].surge!=1?' '+rides[i].surgeText+' '+rides[i].surge:'')+'</td><td>'+rides[i].estimate+'</td><td>'+rides[i].eta+'</td><td><a href='+rides[i].orderLink+'><button type="button" class="btn btn-default">Go!</button></a></td></tr>'
