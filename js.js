@@ -167,7 +167,7 @@ function calculateRides (startLat, startLng, endLat, endLng) {
       for (var i = 0; i < response.routes[0].legs[0].steps.length; i++) {
         travelTime+=response.routes[0].legs[0].steps[i].duration.value;
         if(response.routes[0].legs[0].steps[i].travel_mode == "TRANSIT")
-          description += "<img src="+((response.routes[0].legs[0].steps[i].transit.line.vehicle.local_icon==undefined)?response.routes[0].legs[0].steps[i].transit.line.vehicle.icon:response.routes[0].legs[0].steps[i].transit.line.vehicle.local_icon)+" height=16px width=16px></img> "+response.routes[0].legs[0].steps[i].transit.line.short_name+((i<response.routes[0].legs.length-1)?"<i class="fa fa-caret-right" aria-hidden="true"></i>; ":"");
+          description += "<img src="+((response.routes[0].legs[0].steps[i].transit.line.vehicle.local_icon==undefined)?response.routes[0].legs[0].steps[i].transit.line.vehicle.icon:response.routes[0].legs[0].steps[i].transit.line.vehicle.local_icon)+" height=16px width=16px></img> "+response.routes[0].legs[0].steps[i].transit.line.short_name+((i<response.routes[0].legs.length-1)?"<i class=\"fa fa-caret-right\" aria-hidden=\"true\"></i>; ":"");
       }
       rides.push({
         name: description,
