@@ -268,6 +268,10 @@ function initMap() {
   destMarker.addListener('mouseup', function() {
     update();
   });
+  originMarker.addListener('mouseup', function() {
+    update();
+  });
+
 
   directionsService = new google.maps.DirectionsService;
   var directionsDisplay = new google.maps.DirectionsRenderer ({
