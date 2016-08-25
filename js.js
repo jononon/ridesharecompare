@@ -5,7 +5,7 @@ endLat = 34.0481852;
 endLng = -118.5038797;
 */
 var directionsService;
-var travelTime;
+var travelTimeDriving;
 var uberToken, lyftToken
 $(document).ready(function() {
   $.ajax({
@@ -294,7 +294,7 @@ function initMap() {
       destination: end,
       travelMode: google.maps.TravelMode.DRIVING
     }, function(response, status) {
-      travelTime = response.routes[0].legs[0].duration.text;
+      travelTimeDriving = ""+response.routes[0].legs[0].duration.text;
       $('#tripTime').html("The trip will take "+response.routes[0].legs[0].duration.text+" via "+response.routes[0].summary);
       if (status === google.maps.DirectionsStatus.OK) {
         directionsDisplay.setDirections(response);
