@@ -287,8 +287,10 @@ function initMap() {
     if(originMarker.position != undefined && destMarker.position != undefined) {
       $("body").addClass("grey");
       $("#loadingIcon").show();
-      calculateAndDisplayRoute(originMarker.position, destMarker.position);
-      calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
+      setTimeout(function(){
+        calculateAndDisplayRoute(originMarker.position, destMarker.position);
+        calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
+      },200);
     }
   }
 
