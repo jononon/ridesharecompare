@@ -5,7 +5,7 @@ endLat = 34.0481852;
 endLng = -118.5038797;
 */
 var directionsService;
-
+var travelTime;
 var uberToken, lyftToken
 $(document).ready(function() {
   $.ajax({
@@ -180,7 +180,7 @@ function calculateRides (startLat, startLng, endLat, endLng) {
         service: "Transit",
         product_id: "Transit",
         orderLink: 'https://www.google.com/maps/dir/'+start.lat+','+start.lng+'/'+end.lat+','+end.lng,
-        eta: ((travelTime/60/60>=1)?""+parseInt(travelTime/60/60)+" hours and ":"")+parseInt(travelTime/60%60)+" minutes"
+        eta: ((travelTime/60/60>=1)?""+parseInt(travelTime/60/60)+" hours and ":"")+parseInt(travelTime/60%60)+" minutes "+((travelTime==undefined)?"":"compared to "+travelTime+" on the road.")
       });
     }
     tablehtml = "<tr><th>Ride</th><th>"/*surge*/+"</th><th>Cost</th><th>ETA</th><th></th></tr>";
@@ -282,9 +282,10 @@ function initMap() {
   directionsDisplay.setMap(map);
 
   function update() {
-    if(originMarker.position != undefined && destMarker.position != undefined)
-    calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
-    calculateAndDisplayRoute(originMarker.position, destMarker.position);
+    if(originMarker.position != undefined && destMarker.position != undefined) {
+      calculateAndDisplayRoute(originMarker.position, destMarker.position);
+      calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
+    }
   }
 
   function calculateAndDisplayRoute(start, end) {
@@ -293,6 +294,7 @@ function initMap() {
       destination: end,
       travelMode: google.maps.TravelMode.DRIVING
     }, function(response, status) {
+      travelTime = response.routes[0].legs[0].duration.text;
       $('#tripTime').html("The trip will take "+response.routes[0].legs[0].duration.text+" via "+response.routes[0].summary);
       if (status === google.maps.DirectionsStatus.OK) {
         directionsDisplay.setDirections(response);
