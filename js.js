@@ -283,8 +283,10 @@ function initMap() {
 
   function update() {
     if(originMarker.position != undefined && destMarker.position != undefined) {
+      $("body").addClass("grey");
       calculateAndDisplayRoute(originMarker.position, destMarker.position);
       calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
+      $("body").removeClass("grey");
     }
   }
 
