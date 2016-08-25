@@ -4,6 +4,8 @@ startLng = -118.748161;
 endLat = 34.0481852;
 endLng = -118.5038797;
 */
+var directionsService;
+
 var uberToken, lyftToken
 $(document).ready(function() {
   $.ajax({
@@ -140,10 +142,35 @@ function calculateRides (startLat, startLng, endLat, endLng) {
     lat:endLat,
     lng:endLng
   }
-  var transit = calculateTransitTimes(start, end);
-  if(transit!=undefined) {
-    rides.push(transit);
-  }
+  directionsService.route({
+    origin: start,
+    destination: end,
+    travelMode: google.maps.TravelMode.TRANSIT
+  }, function(response, status) {
+    var data = undefined;
+    if(status == "OK") {
+      var description = "";
+      var travelTime = 0;
+      for (var i = 0; i < response.routes[0].legs[0].steps.length; i++) {
+        travelTime+=response.routes[0].legs[0].steps[i].duration.value;
+        if(response.routes[0].legs[0].steps[i].travel_mode == "TRANSIT")
+          description += "<img src="+((response.routes[0].legs[0].steps[i].transit.line.vehicle.local_icon==undefined)?response.routes[0].legs[0].steps[i].transit.line.vehicle.icon:response.routes[0].legs[0].steps[i].transit.line.vehicle.local_icon)+"></img> "+response.routes[0].legs[0].steps[i].transit.line.short_name+((i<response.routes[0].legs.length-1)?" &#x25b6; ":"");
+      }
+      rides.push({
+        name: description,
+        highEstimate: "",
+        lowEstimate: "",
+        surge: "",
+        companyLogo: "",
+        surgeText: "",
+        estimate:"",
+        service: "Transit",
+        product_id: "Transit",
+        orderLink: 'https://www.google.com/maps/dir/'+start.lat+','+start.lng+'/'+end.lat+','+end.lng,
+        eta: ((travelTime/60/60>=1)?""+parseInt(travelTime/60/60)+" hours and ":"")+travelTime/60%60+" minutes"
+      });
+    }
+  });
 
   function comparePrice(a,b) {
     comparisonPriceA = (a.highEstimate+a.lowEstimate)/2;
@@ -163,7 +190,6 @@ function calculateRides (startLat, startLng, endLat, endLng) {
   $('#prices').html(tablehtml);
   $('#lastUpdated').html("Last Updated: "+(new Date()).toLocaleString());
 }
-var directionsService;
 function initMap() {
   // Create a map object and specify the DOM element for display.
   var map = new google.maps.Map(document.getElementById('map'), {
@@ -290,38 +316,6 @@ function initMap() {
   $("#refresh").click(function(){
     if(originMarker.position != undefined && destMarker.position != undefined) {
       calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
-    }
-  });
-}
-
-function calculateTransitTimes(start, end) {
-  directionsService.route({
-    origin: start,
-    destination: end,
-    travelMode: google.maps.TravelMode.TRANSIT
-  }, function(response, status) {
-    var data = undefined;
-    if(status == "OK") {
-      var description = "";
-      var travelTime = 0;
-      for (var i = 0; i < response.routes[0].legs[0].steps.length; i++) {
-        travelTime+=response.routes[0].legs[0].steps[i].duration.value;
-        if(response.routes[0].legs[0].steps[i].travel_mode == "TRANSIT")
-          description += "<img src="+((response.routes[0].legs[0].steps[i].transit.line.vehicle.local_icon==undefined)?response.routes[0].legs[0].steps[i].transit.line.vehicle.icon:response.routes[0].legs[0].steps[i].transit.line.vehicle.local_icon)+"></img> "+response.routes[0].legs[0].steps[i].transit.line.short_name+((i<response.routes[0].legs.length-1)?" &#x25b6; ":"");
-      }
-      return {
-        name: description,
-        highEstimate: "",
-        lowEstimate: "",
-        surge: "",
-        companyLogo: "",
-        surgeText: "",
-        estimate:"",
-        service: "Transit",
-        product_id: "Transit",
-        orderLink: 'https://www.google.com/maps/dir/'+start.lat+','+start.lng+'/'+end.lat+','+end.lng,
-        eta: ((travelTime/60/60>=1)?""+parseInt(travelTime/60/60)+" hours and ":"")+travelTime/60%60+" minutes"
-      };
     }
   });
 }
