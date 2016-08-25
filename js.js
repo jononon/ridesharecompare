@@ -288,7 +288,7 @@ function initMap() {
       setTimeout(function(){
         calculateAndDisplayRoute(originMarker.position, destMarker.position);
         calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
-      },200);
+      },100);
     }
   }
 
@@ -325,8 +325,11 @@ function initMap() {
   },60000);
 
   $("#refresh").click(function(){
-    if(originMarker.position != undefined && destMarker.position != undefined) {
-      calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
-    }
+    $("body").addClass("grey");
+    setTimeout(function(){
+      if(originMarker.position != undefined && destMarker.position != undefined) {
+        calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
+      }
+    },100);
   });
 }
