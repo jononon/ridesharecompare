@@ -190,7 +190,6 @@ function calculateRides (startLat, startLng, endLat, endLng) {
     $('#prices').html(tablehtml);
     $('#lastUpdated').html("Last Updated: "+(new Date()).toLocaleString());
   });
-  $("#loadingIcon").hide();
   $("body").removeClass("grey");
 }
 function initMap() {
@@ -286,7 +285,6 @@ function initMap() {
   function update() {
     if(originMarker.position != undefined && destMarker.position != undefined) {
       $("body").addClass("grey");
-      $("#loadingIcon").show();
       setTimeout(function(){
         calculateAndDisplayRoute(originMarker.position, destMarker.position);
         calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
