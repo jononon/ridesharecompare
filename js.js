@@ -179,7 +179,7 @@ function calculateRides (startLat, startLng, endLat, endLng) {
         estimate:"",
         service: "Transit",
         product_id: "Transit",
-        orderLink: 'https://www.google.com/maps/dir/'+start.lat+','+start.lng+'/'+end.lat+','+end.lng,
+        orderLink: 'https://www.google.com/maps/dir/'+start.lat+','+start.lng+'/'+end.lat+','+end.lng+"/data=!4m2!4m1!3e3",
         eta: ((travelTime/60/60>=1)?""+parseInt(travelTime/60/60)+" hours and ":"")+parseInt(travelTime/60%60)+" minutes "+((travelTimeDriving==undefined)?"":"compared to "+travelTimeDriving+" on the road.")
       });
     }
