@@ -48,7 +48,7 @@ function calculateRides (startLat, startLng, endLat, endLng) {
             estimate: output.prices[i].estimate,
             service: "Uber",
             product_id: output.prices[i].product_id,
-            orderLink: 'https://m.uber.com/ul?action=setPickup&pickup[latitude]='+startLat+'&pickup[longitude]='+startLng+'&dropoff[latitude]='+endLat+'&dropoff[longitude]='+endLng+'&product_id='+output.prices[i].product_id+($('#startSearch').val()==""?"":("&pickup[nickname]="+$('#startSearch').val()))+($('#destSearch').val()==""?"":("&dropoff[nickname]="+$('#destSearch').val())),
+            orderLink: 'https://m.uber.com/ul?action=setPickup&pickup[latitude]='+startLat+'&pickup[longitude]='+startLng+'&dropoff[latitude]='+endLat+'&dropoff[longitude]='+endLng+'&product_id='+output.prices[i].product_id+($('#startSearch').val()==""?"":("&pickup[nickname]="+$('#startSearch').val().replace("/\s/g","%20")))+($('#destSearch').val()==""?"":("&dropoff[nickname]="+$('#destSearch').val().replace("/\s/g","%20"))),
             eta: undefined
           }
         );
