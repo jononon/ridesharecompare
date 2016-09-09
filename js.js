@@ -37,6 +37,7 @@ function calculateRides (startLat, startLng, endLat, endLng) {
     dataType: 'json',
     success: function(output) {
       for (var i = 0; i < output.prices.length; i++) {
+        //Add prices for uber
         rides.push(
           {
             name: output.prices[i].localized_display_name,
