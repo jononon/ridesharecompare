@@ -30,7 +30,7 @@ $(document).ready(function() {
 });
 
 function calculateRides (startLat, startLng, endLat, endLng) {
-//force
+
   var rides = [];
   $.ajax({
     url: 'https://api.uber.com/v1/estimates/price?start_latitude='+startLat+'&start_longitude='+startLng+'&end_latitude='+endLat+'&end_longitude='+endLng+'&seat_count=1',
