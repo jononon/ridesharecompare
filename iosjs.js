@@ -161,36 +161,6 @@ function calculateRides (startLat, startLng, endLat, endLng) {
       return 0;
   }
   rides.sort(comparePrice);
-
-  directionsService.route({
-    origin: start,
-    destination: end,
-    travelMode: google.maps.TravelMode.TRANSIT
-  }, function(response, status) {
-    var data = undefined;
-    if(status == "OK") {
-      var description = "";
-      var travelTime = 0;
-      for (var i = 0; i < response.routes[0].legs[0].steps.length; i++) {
-        travelTime+=response.routes[0].legs[0].steps[i].duration.value;
-        if(response.routes[0].legs[0].steps[i].travel_mode == "TRANSIT")
-          description += "<img src="+((response.routes[0].legs[0].steps[i].transit.line.vehicle.local_icon==undefined)?response.routes[0].legs[0].steps[i].transit.line.vehicle.icon:response.routes[0].legs[0].steps[i].transit.line.vehicle.local_icon)+" height=16px width=16px></img> "+((response.routes[0].legs[0].steps[i].transit.line.short_name==undefined)?response.routes[0].legs[0].steps[i].transit.line.name:response.routes[0].legs[0].steps[i].transit.line.short_name)+((i<response.routes[0].legs[0].steps.length-2)?" <i class=\"fa fa-caret-right\" aria-hidden=\"true\"></i> ":"");
-      }
-      rides.push({
-        name: description,
-        highEstimate: 0,
-        lowEstimate: 0,
-        surge: "",
-        companyLogo: "",
-        surgeText: "",
-        estimate:"",
-        service: "Transit",
-        product_id: "Transit",
-        orderLink: 'https://www.google.com/maps/dir/'+start.lat+','+start.lng+'/'+end.lat+','+end.lng+"/data=!4m2!4m1!3e3",
-        eta: ((travelTime/60/60>=1)?""+parseInt(travelTime/60/60)+" hours and ":"")+parseInt(travelTime/60%60)+" minutes "+((travelTimeDriving==undefined)?"":"compared to "+travelTimeDriving+" on the road.")
-      });
-    }
-  });
   document.write(JSON.stringify(rides));
 }
 
