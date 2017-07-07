@@ -161,7 +161,7 @@ function calculateRides (startLat, startLng, endLat, endLng) {
       return 0;
   }
   rides.sort(comparePrice);
-  document.write(JSON.parse(rides));
+  document.write(JSON.stringify(rides));
 
   console.log(JSON.stringify(rides))
 }
