@@ -190,7 +190,7 @@ function calculateRides (startLat, startLng, endLat, endLng) {
         eta: ((travelTime/60/60>=1)?""+parseInt(travelTime/60/60)+" hours and ":"")+parseInt(travelTime/60%60)+" minutes "+((travelTimeDriving==undefined)?"":"compared to "+travelTimeDriving+" on the road.")
       });
     }
-  }
+  });
   document.write(JSON.stringify(rides));
 }
 
