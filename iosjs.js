@@ -7,7 +7,7 @@ endLng = -118.5038797;
 var directionsService;
 var travelTimeDriving;
 var uberToken, lyftToken
-$(document).ready(function() {
+function run () {
   $.ajax({
     url:"https://api.lyft.com/oauth/token",
     dataType:"json",
@@ -33,7 +33,7 @@ $(document).ready(function() {
   var endLat = getParameterByName('endLat');
   var endLng = getParameterByName('endLng');
   calculateRides (startLat, startLng, endLat, endLng)
-});
+}
 
 function calculateRides (startLat, startLng, endLat, endLng) {
 
