@@ -85,7 +85,7 @@ function calculateRides (startLat, startLng, endLat, endLng) {
     timeout: 5000,
   });
   $.ajax({
-    url: 'https://crossorigin.me/https://api.lyft.com/v1/cost?start_lat='+startLat+'&start_lng='+startLng+'&end_lat='+endLat+'&end_lng='+endLng,
+    url: 'https://api.lyft.com/v1/cost?start_lat='+startLat+'&start_lng='+startLng+'&end_lat='+endLat+'&end_lng='+endLng,
     dataType: 'json',
     success: function(output) {
       for (var i = 0; i < output.cost_estimates.length; i++) {
@@ -114,7 +114,7 @@ function calculateRides (startLat, startLng, endLat, endLng) {
     timeout: 5000,
   });
     $.ajax({
-      url: 'https://crossorigin.me/https://api.lyft.com/v1/eta?lat='+startLat+'&lng='+startLng,
+      url: 'https://api.lyft.com/v1/eta?lat='+startLat+'&lng='+startLng,
       dataType: 'json',
       success: function(output) {
         for (var j = 0; j < rides.length; j++) {
