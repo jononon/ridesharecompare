@@ -87,6 +87,7 @@ function calculateRides (startLat, startLng, endLat, endLng) {
   $.ajax({
     url: 'https://api.lyft.com/v1/cost?start_lat='+startLat+'&start_lng='+startLng+'&end_lat='+endLat+'&end_lng='+endLng,
     dataType: 'json',
+    "crossDomain": true,
     beforeSend: function (xhr) {
       xhr.setRequestHeader('Authorization', "Bearer " + lyftToken);
     },
@@ -116,6 +117,7 @@ function calculateRides (startLat, startLng, endLat, endLng) {
     $.ajax({
       url: 'https://api.lyft.com/v1/eta?lat='+startLat+'&lng='+startLng,
       dataType: 'json',
+      "crossDomain": true,
       beforeSend: function (xhr) {
         xhr.setRequestHeader('Authorization', "Bearer " + lyftToken);
       },
