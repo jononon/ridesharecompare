@@ -87,6 +87,9 @@ function calculateRides (startLat, startLng, endLat, endLng) {
   $.ajax({
     url: 'https://api.lyft.com/v1/cost?start_lat='+startLat+'&start_lng='+startLng+'&end_lat='+endLat+'&end_lng='+endLng,
     dataType: 'json',
+    beforeSend: function (xhr) {
+      xhr.setRequestHeader('Authorization', "Bearer " + lyftToken);
+    },
     success: function(output) {
       for (var i = 0; i < output.cost_estimates.length; i++) {
         rides.push(
@@ -107,15 +110,15 @@ function calculateRides (startLat, startLng, endLat, endLng) {
       }
     },
     method: "GET",
-    headers: {
-      "Authorization": "Bearer " + lyftToken
-    },
     async: false,
-    timeout: 5000,
+    timeout: 5000
   });
     $.ajax({
       url: 'https://api.lyft.com/v1/eta?lat='+startLat+'&lng='+startLng,
       dataType: 'json',
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader('Authorization', "Bearer " + lyftToken);
+      },
       success: function(output) {
         for (var j = 0; j < rides.length; j++) {
           for (var i = 0; i < output.eta_estimates.length; i++) {
@@ -129,11 +132,8 @@ function calculateRides (startLat, startLng, endLat, endLng) {
         }
       },
     method: "GET",
-    headers: {
-      "Authorization": "Bearer " + lyftToken
-    },
     async: false,
-    timeout: 5000,
+    timeout: 5000
   });
   var start = {
     lat:startLat,
