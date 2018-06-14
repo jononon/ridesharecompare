@@ -88,8 +88,10 @@ function calculateRides (startLat, startLng, endLat, endLng) {
     url: 'https://api.lyft.com/v1/cost?start_lat='+startLat+'&start_lng='+startLng+'&end_lat='+endLat+'&end_lng='+endLng,
     dataType: 'json',
     "crossDomain": true,
-    beforeSend: function (xhr) {
-      xhr.setRequestHeader('Authorization', "Bearer " + lyftToken);
+    "headers": {
+      "authorization": "Bearer " + lyftToken,
+      "cache-control": "no-cache",
+      "postman-token": "7a740b4c-d57f-be3e-9472-570b8c29d4fd"
     },
     success: function(output) {
       for (var i = 0; i < output.cost_estimates.length; i++) {
@@ -118,9 +120,11 @@ function calculateRides (startLat, startLng, endLat, endLng) {
       url: 'https://api.lyft.com/v1/eta?lat='+startLat+'&lng='+startLng,
       dataType: 'json',
       "crossDomain": true,
-      beforeSend: function (xhr) {
-        xhr.setRequestHeader('Authorization', "Bearer " + lyftToken);
-      },
+      "headers": {
+      "authorization": "Bearer " + lyftToken,
+      "cache-control": "no-cache",
+      "postman-token": "7a740b4c-d57f-be3e-9472-570b8c29d4fd"
+    },
       success: function(output) {
         for (var j = 0; j < rides.length; j++) {
           for (var i = 0; i < output.eta_estimates.length; i++) {
