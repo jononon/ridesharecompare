@@ -85,7 +85,7 @@ function calculateRides (startLat, startLng, endLat, endLng) {
     timeout: 5000,
   });
   $.ajax({
-    url: 'http://api.lyft.com/v1/cost?start_lat='+startLat+'&start_lng='+startLng+'&end_lat='+endLat+'&end_lng='+endLng,
+    url: 'https://api.lyft.com/v1/cost?start_lat='+startLat+'&start_lng='+startLng+'&end_lat='+endLat+'&end_lng='+endLng,
     dataType: 'json',
     crossDomain: true,
     headers: {
@@ -117,7 +117,7 @@ function calculateRides (startLat, startLng, endLat, endLng) {
     timeout: 5000
   });
     $.ajax({
-      url: 'http://api.lyft.com/v1/eta?lat='+startLat+'&lng='+startLng,
+      url: 'https://api.lyft.com/v1/eta?lat='+startLat+'&lng='+startLng,
       dataType: 'json',
       crossDomain: true,
       headers: {
