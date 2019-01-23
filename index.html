@@ -1,11 +1,24 @@
 <head>
   <link href='//fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
-  <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-  <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
   <script src="//use.fontawesome.com/2ee144e705.js"></script>
-  <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.8.0/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyB2fV5JIkP7PgRPDzCnsQZ8-AOovaFSWaQ",
+      authDomain: "friendly-medley-136520.firebaseapp.com",
+      databaseURL: "https://friendly-medley-136520.firebaseio.com",
+      projectId: "friendly-medley-136520",
+      storageBucket: "friendly-medley-136520.appspot.com",
+      messagingSenderId: "76068053452"
+    };
+    firebase.initializeApp(config);
+  </script>
   <script type="text/javascript" src="js.js"></script>
+  <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <title>RideShareCompare</title>
 </head>

@@ -32,36 +32,62 @@ $(document).ready(function() {
 function calculateRides (startLat, startLng, endLat, endLng) {
 
   var rides = [];
-  $.ajax({
-    url: 'https://api.uber.com/v1/estimates/price?start_latitude='+startLat+'&start_longitude='+startLng+'&end_latitude='+endLat+'&end_longitude='+endLng+'&seat_count=1',
-    dataType: 'json',
-    success: function(output) {
-      for (var i = 0; i < output.prices.length; i++) {
-        //Add prices for uber
-        rides.push(
-          {
-            name: output.prices[i].localized_display_name,
-            highEstimate: output.prices[i].high_estimate,
-            lowEstimate: output.prices[i].low_estimate,
-            surge: output.prices[i].surge_multiplier,
-            companyLogo: "<img src=uberAssets/RIDESAPIICON/SVG/uber_rides_api_icon.svg height=16px width=16px>",
-            surgeText: "<img src=uberAssets/UBERSURGEICON/PNGs/1x/Uber_Surge_Icon_16px.png>",
-            estimate: output.prices[i].estimate,
-            service: "Uber",
-            product_id: output.prices[i].product_id,
-            orderLink: 'uber://?action=setPickup&pickup[latitude]='+startLat+'&pickup[longitude]='+startLng+'&dropoff[latitude]='+endLat+'&dropoff[longitude]='+endLng+'&product_id='+output.prices[i].product_id+($('#startSearch').val()==""?"":("&pickup[nickname]="+$('#startSearch').val().replace(/\s/g,"%20")))+($('#destSearch').val()==""?"":("&dropoff[nickname]="+$('#destSearch').val().replace(/\s/g,"%20"))),
-            eta: undefined
-          }
-        );
-      }
-    },
-    method: "GET",
-    headers: {
-      "authorization": "Token v_KOeq4LzWvcEhWFHQIUvHCUWWJN5OiSS46ckv5p",
-    },
-    async: false,
-    timeout: 5000,
+  var getUberPrices = firebase.functions().httpsCallable('getUberPrices');
+  getUberPrices({ start_latitude: startLat,
+   start_longitude: startLng,
+   end_latitude: endLat,
+   end_longitude: endLng
+  }).then(function(result) {
+    // Read result of the Cloud Function.
+    for (var i = 0; i < result.prices.length; i++) {
+      //Add prices for uber
+      rides.push(
+        {
+          name: output.prices[i].localized_display_name,
+          highEstimate: output.prices[i].high_estimate,
+          lowEstimate: output.prices[i].low_estimate,
+          surge: output.prices[i].surge_multiplier,
+          companyLogo: "<img src=uberAssets/RIDESAPIICON/SVG/uber_rides_api_icon.svg height=16px width=16px>",
+          surgeText: "<img src=uberAssets/UBERSURGEICON/PNGs/1x/Uber_Surge_Icon_16px.png>",
+          estimate: output.prices[i].estimate,
+          service: "Uber",
+          product_id: output.prices[i].product_id,
+          orderLink: 'uber://?action=setPickup&pickup[latitude]='+startLat+'&pickup[longitude]='+startLng+'&dropoff[latitude]='+endLat+'&dropoff[longitude]='+endLng+'&product_id='+output.prices[i].product_id+($('#startSearch').val()==""?"":("&pickup[nickname]="+$('#startSearch').val().replace(/\s/g,"%20")))+($('#destSearch').val()==""?"":("&dropoff[nickname]="+$('#destSearch').val().replace(/\s/g,"%20"))),
+          eta: undefined
+        }
+      );
+    }
   });
+  // $.ajax({
+  //   url: 'https://api.uber.com/v1/estimates/price?start_latitude='+startLat+'&start_longitude='+startLng+'&end_latitude='+endLat+'&end_longitude='+endLng+'&seat_count=1',
+  //   dataType: 'json',
+  //   success: function(output) {
+  //     for (var i = 0; i < output.prices.length; i++) {
+  //       //Add prices for uber
+  //       rides.push(
+  //         {
+  //           name: output.prices[i].localized_display_name,
+  //           highEstimate: output.prices[i].high_estimate,
+  //           lowEstimate: output.prices[i].low_estimate,
+  //           surge: output.prices[i].surge_multiplier,
+  //           companyLogo: "<img src=uberAssets/RIDESAPIICON/SVG/uber_rides_api_icon.svg height=16px width=16px>",
+  //           surgeText: "<img src=uberAssets/UBERSURGEICON/PNGs/1x/Uber_Surge_Icon_16px.png>",
+  //           estimate: output.prices[i].estimate,
+  //           service: "Uber",
+  //           product_id: output.prices[i].product_id,
+  //           orderLink: 'uber://?action=setPickup&pickup[latitude]='+startLat+'&pickup[longitude]='+startLng+'&dropoff[latitude]='+endLat+'&dropoff[longitude]='+endLng+'&product_id='+output.prices[i].product_id+($('#startSearch').val()==""?"":("&pickup[nickname]="+$('#startSearch').val().replace(/\s/g,"%20")))+($('#destSearch').val()==""?"":("&dropoff[nickname]="+$('#destSearch').val().replace(/\s/g,"%20"))),
+  //           eta: undefined
+  //         }
+  //       );
+  //     }
+  //   },
+  //   method: "GET",
+  //   headers: {
+  //     "authorization": "Token v_KOeq4LzWvcEhWFHQIUvHCUWWJN5OiSS46ckv5p",
+  //   },
+  //   async: false,
+  //   timeout: 5000,
+  // });
   $.ajax({
     url: 'https://api.uber.com/v1/estimates/time?start_latitude='+startLat+'&start_longitude='+startLng,
     dataType: 'json',
