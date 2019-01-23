@@ -1,180 +1,14 @@
-/*
-startLat = 34.145954;
-startLng = -118.748161;
-endLat = 34.0481852;
-endLng = -118.5038797;
-*/
 var directionsService;
 var travelTimeDriving;
-var uberToken, lyftToken
-$(document).ready(function() {
-  $.ajax({
-    url:"https://api.lyft.com/oauth/token",
-    dataType:"json",
-    headers: {
-        'Content-Type': 'application/json',
-        Authorization: "Basic " + btoa("654wGz1FI93m:dnSPEdZbsUoq3UJpEukmdAu4NwTYr1dg")
-    },
-    data: JSON.stringify({
-      grant_type: 'client_credentials',
-      scope: 'public'
-    }),
-    success: function (output) {
-      lyftToken = output.access_token;
-    },
-    type: "POST",
-    contentType: "application/json",
-    async: false,
-    timeout: 5000
-  });
-});
 
-function calculateRides (startLat, startLng, endLat, endLng) {
+var getUberPrices = firebase.functions().httpsCallable('getUberPrices');
+var getUberTimes = firebase.functions().httpsCallable('getUberTimes');
 
-  var rides = [];
-  var getUberPrices = firebase.functions().httpsCallable('getUberPrices');
-  getUberPrices({ start_latitude: startLat,
-   start_longitude: startLng,
-   end_latitude: endLat,
-   end_longitude: endLng
-  }).then(function(result) {
-    // Read result of the Cloud Function.
-    for (var i = 0; i < result.prices.length; i++) {
-      //Add prices for uber
-      rides.push(
-        {
-          name: output.prices[i].localized_display_name,
-          highEstimate: output.prices[i].high_estimate,
-          lowEstimate: output.prices[i].low_estimate,
-          surge: output.prices[i].surge_multiplier,
-          companyLogo: "<img src=uberAssets/RIDESAPIICON/SVG/uber_rides_api_icon.svg height=16px width=16px>",
-          surgeText: "<img src=uberAssets/UBERSURGEICON/PNGs/1x/Uber_Surge_Icon_16px.png>",
-          estimate: output.prices[i].estimate,
-          service: "Uber",
-          product_id: output.prices[i].product_id,
-          orderLink: 'uber://?action=setPickup&pickup[latitude]='+startLat+'&pickup[longitude]='+startLng+'&dropoff[latitude]='+endLat+'&dropoff[longitude]='+endLng+'&product_id='+output.prices[i].product_id+($('#startSearch').val()==""?"":("&pickup[nickname]="+$('#startSearch').val().replace(/\s/g,"%20")))+($('#destSearch').val()==""?"":("&dropoff[nickname]="+$('#destSearch').val().replace(/\s/g,"%20"))),
-          eta: undefined
-        }
-      );
-    }
-  });
-  // $.ajax({
-  //   url: 'https://api.uber.com/v1/estimates/price?start_latitude='+startLat+'&start_longitude='+startLng+'&end_latitude='+endLat+'&end_longitude='+endLng+'&seat_count=1',
-  //   dataType: 'json',
-  //   success: function(output) {
-  //     for (var i = 0; i < output.prices.length; i++) {
-  //       //Add prices for uber
-  //       rides.push(
-  //         {
-  //           name: output.prices[i].localized_display_name,
-  //           highEstimate: output.prices[i].high_estimate,
-  //           lowEstimate: output.prices[i].low_estimate,
-  //           surge: output.prices[i].surge_multiplier,
-  //           companyLogo: "<img src=uberAssets/RIDESAPIICON/SVG/uber_rides_api_icon.svg height=16px width=16px>",
-  //           surgeText: "<img src=uberAssets/UBERSURGEICON/PNGs/1x/Uber_Surge_Icon_16px.png>",
-  //           estimate: output.prices[i].estimate,
-  //           service: "Uber",
-  //           product_id: output.prices[i].product_id,
-  //           orderLink: 'uber://?action=setPickup&pickup[latitude]='+startLat+'&pickup[longitude]='+startLng+'&dropoff[latitude]='+endLat+'&dropoff[longitude]='+endLng+'&product_id='+output.prices[i].product_id+($('#startSearch').val()==""?"":("&pickup[nickname]="+$('#startSearch').val().replace(/\s/g,"%20")))+($('#destSearch').val()==""?"":("&dropoff[nickname]="+$('#destSearch').val().replace(/\s/g,"%20"))),
-  //           eta: undefined
-  //         }
-  //       );
-  //     }
-  //   },
-  //   method: "GET",
-  //   headers: {
-  //     "authorization": "Token v_KOeq4LzWvcEhWFHQIUvHCUWWJN5OiSS46ckv5p",
-  //   },
-  //   async: false,
-  //   timeout: 5000,
-  // });
-  $.ajax({
-    url: 'https://api.uber.com/v1/estimates/time?start_latitude='+startLat+'&start_longitude='+startLng,
-    dataType: 'json',
-    success: function(output) {
-      for (var j = 0; j < rides.length; j++) {
-        for (var i = 0; i < output.times.length; i++) {
-          if(rides[j].product_id == output.times[i].product_id) {
-            rides[j].eta = ''+parseInt(output.times[i].estimate/60)+' mins';
-            break;
-          }
-          if(rides[j].eta == undefined)
-            rides[j].eta = 'Not Available';
-        }
-      }
-    },
-    method: "GET",
-    headers: {
-      "authorization": "Token v_KOeq4LzWvcEhWFHQIUvHCUWWJN5OiSS46ckv5p",
-    },
-    async: false,
-    timeout: 5000,
-  });
-  $.ajax({
-    url: 'https://api.lyft.com/v1/cost?start_lat='+startLat+'&start_lng='+startLng+'&end_lat='+endLat+'&end_lng='+endLng,
-    dataType: 'json',
-    crossDomain: true,
-    headers: {
-      "authorization": "Bearer " + lyftToken,
-      "cache-control": "no-cache",
-      "postman-token": "7a740b4c-d57f-be3e-9472-570b8c29d4fd"
-    },
-    success: function(output) {
-      for (var i = 0; i < output.cost_estimates.length; i++) {
-        rides.push(
-          {
-            name: output.cost_estimates[i].display_name,
-            highEstimate: output.cost_estimates[i].estimated_cost_cents_max/100,
-            lowEstimate: output.cost_estimates[i].estimated_cost_cents_min/100,
-            surge: output.cost_estimates[i].primetime_percentage=='0%'?1:output.cost_estimates[i].primetime_percentage,
-            companyLogo: "<img src=lyftAssets/pngs/1x/lyft_16px.png>",
-            surgeText: "<img src=lyftAssets/primetime_custom.png> +",
-            estimate: output.cost_estimates[i].estimated_cost_cents_max==0?"N/A":output.cost_estimates[i].estimated_cost_cents_min==output.cost_estimates[i].estimated_cost_cents_max?'$'+parseInt(output.cost_estimates[i].estimated_cost_cents_max/100)+'.'+(output.cost_estimates[i].estimated_cost_cents_max%100<10?'0'+output.cost_estimates[i].estimated_cost_cents_max%100:output.cost_estimates[i].estimated_cost_cents_max%100):'$'+parseInt(output.cost_estimates[i].estimated_cost_cents_min/100)+'-'+parseInt(output.cost_estimates[i].estimated_cost_cents_max/100),
-            service: "Lyft",
-            product_id: output.cost_estimates[i].ride_type,
-            orderLink: 'lyft://ridetype?id='+output.cost_estimates[i].ride_type+'&pickup[latitude]='+startLat+'&pickup[longitude]='+startLng+'&destination[latitude]='+endLat+'&destination[longitude]='+endLng,
-            eta: undefined
-          }
-        );
-      }
-    },
-    method: "GET",
-    async: false,
-    timeout: 5000
-  });
-    $.ajax({
-      url: 'https://api.lyft.com/v1/eta?lat='+startLat+'&lng='+startLng,
-      dataType: 'json',
-      crossDomain: true,
-      headers: {
-        "authorization": "Bearer " + lyftToken,
-        "cache-control": "no-cache",
-        "postman-token": "7a740b4c-d57f-be3e-9472-570b8c29d4fd"
-      },
-      success: function(output) {
-        for (var j = 0; j < rides.length; j++) {
-          for (var i = 0; i < output.eta_estimates.length; i++) {
-            if(rides[j].product_id == output.eta_estimates[i].ride_type) {
-              rides[j].eta = ''+parseInt(output.eta_estimates[i].eta_seconds/60)+' mins';
-              break;
-            }
-            if(rides[j].eta == undefined)
-            rides[j].eta = 'Not Available';
-          }
-        }
-      },
-    method: "GET",
-    async: false,
-    timeout: 5000
-  });
-  var start = {
-    lat:startLat,
-    lng:startLng
-  }
-  var end = {
-    lat:endLat,
-    lng:endLng
-  }
+var getLyftPrices = firebase.functions().httpsCallable('getLyftPrices');
+var getLyftTimes = firebase.functions().httpsCallable('getLyftTimes');
+var uberReady = false, uberRides = [], lyftReady = false, lyftRides = [];
+
+var start, end;
 
   function comparePrice(a,b) {
     comparisonPriceA = (a.highEstimate+a.lowEstimate)/2;
@@ -186,7 +20,14 @@ function calculateRides (startLat, startLng, endLat, endLng) {
     else
       return 0;
   }
-  rides.sort(comparePrice);
+
+  function ready() {
+    if(!uberReady || !lyftReady) {
+      return;
+    }
+
+    var rides = uberRides.concat(lyftRides);
+    rides.sort(comparePrice);
 
   directionsService.route({
     origin: start,
@@ -366,5 +207,110 @@ function initMap() {
         calculateRides(originMarker.position.lat(), originMarker.position.lng(), destMarker.position.lat(), destMarker.position.lng());
       }
     },100);
+  });
+}
+
+function calculateRides (startLat, startLng, endLat, endLng) {
+
+  start = {
+    lat:startLat,
+    lng:startLng
+  }
+  end = {
+    lat:endLat,
+    lng:endLng
+  }
+
+  uberReady = false;
+  uberRides = [];
+  getUberPrices({ startLat: startLat,
+   startLng: startLng,
+   endLat: endLat,
+   endLng: endLng
+  }).then(function(result) {
+    var output = JSON.parse(result.data);
+    // Read result of the Cloud Function.
+    for (var i = 0; i < output.prices.length; i++) {
+      //Add prices for uber
+      uberRides.push(
+        {
+          name: output.prices[i].localized_display_name,
+          highEstimate: output.prices[i].high_estimate,
+          lowEstimate: output.prices[i].low_estimate,
+          surge: output.prices[i].surge_multiplier,
+          companyLogo: "<img src=uberAssets/RIDESAPIICON/SVG/uber_rides_api_icon.svg height=16px width=16px>",
+          surgeText: "<img src=uberAssets/UBERSURGEICON/PNGs/1x/Uber_Surge_Icon_16px.png>",
+          estimate: output.prices[i].estimate,
+          service: "Uber",
+          product_id: output.prices[i].product_id,
+          orderLink: 'uber://?action=setPickup&pickup[latitude]='+startLat+'&pickup[longitude]='+startLng+'&dropoff[latitude]='+endLat+'&dropoff[longitude]='+endLng+'&product_id='+output.prices[i].product_id+($('#startSearch').val()==""?"":("&pickup[nickname]="+$('#startSearch').val().replace(/\s/g,"%20")))+($('#destSearch').val()==""?"":("&dropoff[nickname]="+$('#destSearch').val().replace(/\s/g,"%20"))),
+          eta: undefined
+        }
+      );
+    }
+    
+    getUberTimes({ startLat: startLat,
+     startLng: startLng
+    }).then(function(result) {
+      var output = JSON.parse(result.data);
+      // Read result of the Cloud Function.
+      for (var j = 0; j < uberRides.length; j++) {
+          for (var i = 0; i < output.times.length; i++) {
+            if(uberRides[j].product_id == output.times[i].product_id) {
+              uberRides[j].eta = ''+parseInt(output.times[i].estimate/60)+' mins';
+              break;
+            }
+            if(uberRides[j].eta == undefined)
+              uberRides[j].eta = 'Not Available';
+          }
+        }
+        uberReady = true;
+        ready();
+    });
+  });
+
+  lyftReady = false;
+  lyftRides = [];
+  getLyftPrices({ startLat: startLat,
+   startLng: startLng,
+   endLat: endLat,
+   endLng: endLng
+  }).then(function(result) {
+    var output = JSON.parse(result.data);
+    for (var i = 0; i < output.cost_estimates.length; i++) {
+        lyftRides.push(
+          {
+            name: output.cost_estimates[i].display_name,
+            highEstimate: output.cost_estimates[i].estimated_cost_cents_max/100,
+            lowEstimate: output.cost_estimates[i].estimated_cost_cents_min/100,
+            surge: output.cost_estimates[i].primetime_percentage=='0%'?1:output.cost_estimates[i].primetime_percentage,
+            companyLogo: "<img src=lyftAssets/pngs/1x/lyft_16px.png>",
+            surgeText: "<img src=lyftAssets/primetime_custom.png> +",
+            estimate: output.cost_estimates[i].estimated_cost_cents_max==0?"N/A":output.cost_estimates[i].estimated_cost_cents_min==output.cost_estimates[i].estimated_cost_cents_max?'$'+parseInt(output.cost_estimates[i].estimated_cost_cents_max/100)+'.'+(output.cost_estimates[i].estimated_cost_cents_max%100<10?'0'+output.cost_estimates[i].estimated_cost_cents_max%100:output.cost_estimates[i].estimated_cost_cents_max%100):'$'+parseInt(output.cost_estimates[i].estimated_cost_cents_min/100)+'-'+parseInt(output.cost_estimates[i].estimated_cost_cents_max/100),
+            service: "Lyft",
+            product_id: output.cost_estimates[i].ride_type,
+            orderLink: 'lyft://ridetype?id='+output.cost_estimates[i].ride_type+'&pickup[latitude]='+startLat+'&pickup[longitude]='+startLng+'&destination[latitude]='+endLat+'&destination[longitude]='+endLng,
+            eta: undefined
+          }
+        );
+      }
+      getLyftTimes({
+        startLat: startLat,
+        startLng: startLng
+      }).then(function(result) {
+        var output = JSON.parse(result.data);
+        for (var j = 0; j < lyftRides.length; j++) {
+          for (var i = 0; i < output.eta_estimates.length; i++) {
+            if(lyftRides[j].product_id == output.eta_estimates[i].ride_type) {
+              lyftRides[j].eta = ''+parseInt(output.eta_estimates[i].eta_seconds/60)+' mins';
+              break;
+            }
+            if(lyftRides[j].eta == undefined)
+            lyftRides[j].eta = 'Not Available';
+          }
+        }
+        lyftReady = true;
+        ready();
+      });
   });
 }
